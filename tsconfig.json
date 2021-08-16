@@ -7,11 +7,11 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
-    // "paths": {
-    //   "@modules/*": ["modules/*"],
+    "paths": {
+      "@modules/*": ["modules/*"],
     //   "@config/*": ["config/*"],
-    //   "@shared/*": ["shared/*"]
-    // },
+      "@shared/*": ["shared/*"]
+    },
 
     "esModuleInterop": true,
     "experimentalDecorators": true,
