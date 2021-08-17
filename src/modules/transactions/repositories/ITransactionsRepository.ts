@@ -1,8 +1,8 @@
 import ICreateTransaction from '../dtos/ICreateTransaction';
-import ITransaction from '../dtos/ITransaction';
+import Transaction from '../infra/typeorm/entities/Transaction';
 
 export default interface ITransactionsRepository {
-  create(data: ICreateTransaction): Promise<ITransaction>;
-  findAll(merchantKey: string): Promise<ITransaction[]>;
-  findById(transactionId: string): Promise<ITransaction>;
+  create(payload: ICreateTransaction): Promise<Transaction>;
+  findAll(merchantId: string): Promise<Transaction[] | undefined>;
+  findById(transactionId: string): Promise<Transaction | undefined>;
 }

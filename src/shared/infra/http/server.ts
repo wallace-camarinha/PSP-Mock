@@ -1,4 +1,8 @@
 /* eslint-disable no-console */
+
+import 'reflect-metadata';
+import '../typeorm';
+
 import express from 'express';
 import routes from './routes';
 

@@ -1,6 +1,7 @@
 export default interface ITransaction {
-  transaction_id: string;
-  merchant_id: string;
+  id?: string;
+  merchant_id?: string;
+  customer_id?: string;
   amount: number;
   description: string;
   payment_method: string;
@@ -18,5 +19,4 @@ export default interface ITransaction {
   };
   status: string;
   created_date: Date;
-  updated_date: Date;
 }
