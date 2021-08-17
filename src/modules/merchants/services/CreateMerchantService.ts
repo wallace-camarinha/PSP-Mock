@@ -8,11 +8,11 @@ class CreateMerchantService {
   async execute(payload: ICreateMerchant): Promise<Merchant> {
     const merchantsRepository = getCustomRepository(MerchantsRepository);
 
-    // const merchantExists = await merchantsRepository.findByName(payload.name);
+    const merchantExists = await merchantsRepository.findByName(payload.name);
 
-    // if (merchantExists) {
-    //   throw new AppError('Merchant already exists!', 402);
-    // }
+    if (merchantExists) {
+      throw new AppError('Merchant already exists!', 402);
+    }
 
     const merchant = await merchantsRepository.create(payload);
 
