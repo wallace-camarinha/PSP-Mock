@@ -24,8 +24,7 @@ export default class CustomersController {
   }
 
   public async listAll(req: Request, res: Response): Promise<Response> {
-    const { merchantId } = req.params;
-    const customers = await listAllCustomerService.execute(merchantId);
+    const customers = await listAllCustomerService.execute();
 
     return res.json(customers);
   }

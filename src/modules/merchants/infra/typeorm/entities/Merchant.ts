@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 @Entity('merchants')
-class Merchants {
+class Merchant {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -16,3 +16,5 @@ class Merchants {
   @CreateDateColumn()
   created_at: Date;
 }
+
+export default Merchant;
