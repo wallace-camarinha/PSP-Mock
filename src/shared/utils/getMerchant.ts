@@ -4,9 +4,9 @@ import MerchantsRepository from '@modules/merchants/infra/typeorm/repositories/M
 
 async function getMerchant(merchantId: string): Promise<Merchant> {
   const merchantsRepository = getCustomRepository(MerchantsRepository);
-  const customer = merchantsRepository.findById(merchantId);
+  const merchant = merchantsRepository.findById(merchantId);
 
-  return customer;
+  return merchant;
 }
 
 export default getMerchant;

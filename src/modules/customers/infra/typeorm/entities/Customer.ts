@@ -18,7 +18,7 @@ class Customer {
   document?: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at?: Date;
 }
 
 export default Customer;

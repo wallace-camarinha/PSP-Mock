@@ -17,15 +17,15 @@ export default class TransactionsController {
   }
 
   public async listOne(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
+    const { id } = req.body;
     const transaction = await listOneTransactionService.execute(id);
 
     return res.json(transaction);
   }
 
   public async listAll(req: Request, res: Response): Promise<Response> {
-    const { merchantId } = req.params;
-    const transactions = await listAllTransactionsService.execute(merchantId);
+    const { merchant_id } = req.body;
+    const transactions = await listAllTransactionsService.execute(merchant_id);
 
     return res.json(transactions);
   }

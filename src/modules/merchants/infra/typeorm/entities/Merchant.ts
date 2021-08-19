@@ -14,7 +14,7 @@ class Merchant {
   name: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at?: Date;
 }
 
 export default Merchant;

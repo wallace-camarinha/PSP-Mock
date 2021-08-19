@@ -38,7 +38,9 @@ class MerchantsRepository implements IMerchantsRepository {
       throw new AppError('Merchant not found', 404);
     }
 
-    return merchant;
+    const { created_at, ...responseMerchant } = merchant;
+
+    return responseMerchant;
   }
 
   public async findByName(name: string): Promise<Merchant | undefined> {

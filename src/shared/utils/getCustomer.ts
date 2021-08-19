@@ -15,8 +15,9 @@ export async function getCustomerByEmail(
   if (!customer) {
     customer = await createCustomerService.execute(payload);
   }
+  const { created_at, ...responseCustomer } = customer;
 
-  return customer;
+  return responseCustomer;
 }
 
 export async function getCustomerById(customerId: string): Promise<Customer> {
@@ -26,5 +27,7 @@ export async function getCustomerById(customerId: string): Promise<Customer> {
     throw new AppError('Customer not found!', 405);
   }
 
-  return customer;
+  const { created_at, ...responseCustomer } = customer;
+
+  return responseCustomer;
 }

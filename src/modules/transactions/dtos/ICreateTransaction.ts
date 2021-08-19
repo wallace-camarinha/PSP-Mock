@@ -11,9 +11,10 @@ export default interface ICreateTransaction {
     cvv: number;
   };
   customer: {
+    id?: string;
     name: string;
     email: string;
-    type: string;
-    document: string;
+    type?: string;
+    document?: string;
   };
 }
