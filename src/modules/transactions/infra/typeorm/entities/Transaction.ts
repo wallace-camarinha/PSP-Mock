@@ -1,20 +1,15 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-} from 'typeorm';
+import { Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
 
 @Entity('transactions')
 class Transactions {
-  @PrimaryGeneratedColumn('uuid')
-  id?: string;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   merchant_id: string;
 
   @Column()
-  customer_id: string;
+  customer_id?: string;
 
   @Column()
   amount: number;

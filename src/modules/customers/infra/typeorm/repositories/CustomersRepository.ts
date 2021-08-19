@@ -1,4 +1,5 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
 import ICreateCustomer from '@modules/customers/dtos/ICreateCustomer';
 import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
@@ -15,6 +16,7 @@ class CustomersRepository implements ICustomersRepository {
 
   public async create(payload: ICreateCustomer): Promise<Customer> {
     const customer = this.ormRepository.create({
+      id: uuid(),
       name: payload.name,
       email: payload.email,
       type: payload.type,
