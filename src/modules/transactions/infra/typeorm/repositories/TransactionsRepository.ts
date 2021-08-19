@@ -19,6 +19,10 @@ class TransactionsRepository implements ITransactionsRepository {
   }
 
   public async create(payload: ICreateTransaction): Promise<Transaction> {
+    const cardNumber = payload.payment.card_number;
+    const maskedCardNumber = `${cardNumber.slice(0, 6)}
+    ********${cardNumber.slice(-4)}`;
+
     const transaction = this.ormRepository.create({
       id: uuid(),
       customer_id: payload.customer.id,
@@ -26,7 +30,7 @@ class TransactionsRepository implements ITransactionsRepository {
       amount: payload.amount,
       description: payload.description,
       payment_method: payload.payment_method,
-      card_number: payload.payment.card_number,
+      card_number: maskedCardNumber,
       cardholder_name: payload.payment.cardholder_name,
       exp_date: payload.payment.exp_date,
       cvv: payload.payment.cvv,
