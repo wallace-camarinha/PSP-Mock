@@ -6,7 +6,7 @@ class ListOnePayablesService {
   async execute(merchantId: string): Promise<Payable | undefined> {
     const payablesRepository = getCustomRepository(PayablesRepository);
 
-    const payable = await payablesRepository.findById(merchantId);
+    const payable = await payablesRepository.findAll(merchantId);
     return payable;
   }
 }
