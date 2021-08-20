@@ -16,7 +16,7 @@ Tabela de conteúdos
    * [Como usar](#como-usar)
       * [Pre Requisitos](#pre-requisitos)
       * [Rodando o Backend](#rodando-o-backend)
-      * [Introdução](#introducao)
+      * [Introdução](#introdução)
       * [Merchant](#merchant)
    * [Tecnologias](#tecnologias)
    * [Tests](#testes)
@@ -41,7 +41,7 @@ Além disso é bom ter um editor para trabalhar com o código como [VSCode](http
 <br>
 <br>
 
-## Rodando o Backend (servidor)
+## Rodando o Backend
 
 ```bash
 #Clone este repositório
@@ -87,6 +87,7 @@ O objeto ```merchant``` permite a criação de uma loja na aplicação. Um ```me
 | created_at | right-aligned | Data de criação do Merchant |
 <br>
 ---
+
 <br>
 
 <h3>Criar Merchant - <q style="color:DodgerBlue">POST</q></h3>
@@ -201,7 +202,7 @@ EXEMPLO:
 <br>
 
 
-### 🛠 Tecnologias
+### Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
 
