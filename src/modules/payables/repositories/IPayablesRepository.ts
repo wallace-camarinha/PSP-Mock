@@ -1,8 +1,8 @@
-import ICreateTransaction from '../dtos/ICreatePayable';
-import Transaction from '../infra/typeorm/entities/Transaction';
+import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import Payable from '../infra/typeorm/entities/Payable';
 
-export default interface ITransactionsRepository {
-  create(payload: ICreateTransaction): Promise<Transaction>;
-  findAll(merchantId: string): Promise<Transaction[] | undefined>;
-  findById(transactionId: string): Promise<Transaction | undefined>;
+export default interface IPayablesRepository {
+  create(transaction: Transaction): Promise<Payable>;
+  findAll(merchantId: string): Promise<Payable[] | undefined>;
+  findById(transactionId: string): Promise<Payable | undefined>;
 }

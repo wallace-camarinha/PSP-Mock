@@ -1,7 +1,7 @@
 import { Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
 
 @Entity('payables')
-class Payables {
+class Payable {
   @PrimaryColumn()
   id: string;
 
@@ -12,31 +12,25 @@ class Payables {
   transaction_id: string;
 
   @Column()
-  transaction_amount: string;
+  transaction_amount: number;
 
   @Column()
   merchant_id: string;
 
   @Column()
-  description: string;
-
-  @Column()
-  card_number: string;
-
-  @Column()
-  cardholder_name: string;
-
-  @Column()
-  exp_date: string;
-
-  @Column()
-  cvv: number;
+  merchant_name: string;
 
   @Column()
   status: string;
+
+  @Column()
+  fee: number;
+
+  @CreateDateColumn()
+  payment_date: Date;
 
   @CreateDateColumn()
   created_at: Date;
 }
 
-export default Transactions;
+export default Payable;

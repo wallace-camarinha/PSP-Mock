@@ -1,7 +1,7 @@
 import { Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
 
 @Entity('transactions')
-class Transactions {
+class Transaction {
   @PrimaryColumn()
   id: string;
 
@@ -39,4 +39,4 @@ class Transactions {
   created_at: Date;
 }
 
-export default Transactions;
+export default Transaction;

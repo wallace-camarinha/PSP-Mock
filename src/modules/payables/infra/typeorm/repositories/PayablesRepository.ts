@@ -1,34 +1,23 @@
-import {
-  EntityRepository,
-  getCustomRepository,
-  getRepository,
-  Repository,
-} from 'typeorm';
+import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
-import ICreateTransaction from '@modules/transactions/dtos/ICreateTransaction';
 import ITransactionsRepository from '@modules/transactions/repositories/ITransactionsRepository';
-import Transaction from '../entities/Transaction';
+import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import Payable from '../entities/Payable';
 
-@EntityRepository(Transaction)
-class TransactionsRepository implements ITransactionsRepository {
-  private ormRepository: Repository<Transaction>;
+@EntityRepository(Payable)
+class PayablesRepository implements ITransactionsRepository {
+  private ormRepository: Repository<Payable>;
 
   constructor() {
-    this.ormRepository = getRepository(Transaction);
+    this.ormRepository = getRepository(Payable);
   }
 
-  public async create(payload: ICreateTransaction): Promise<Transaction> {
-    const cardNumber = payload.payment.card_number;
-    const maskedCardNumber = `${cardNumber.slice(0, 6)}
-    ********${cardNumber.slice(-4)}`;
-
-    const transaction = this.ormRepository.create({
+  public async create(transaction: Transaction): Promise<Payable> {
+    const payable = this.ormRepository.create({
       id: uuid(),
-      customer_id: payload.customer.id,
       merchant_id: payload.merchant_id,
-      amount: payload.amount,
-      description: payload.description,
+      amount: 1230,
       payment_method: payload.payment_method,
       card_number: maskedCardNumber,
       cardholder_name: payload.payment.cardholder_name,
