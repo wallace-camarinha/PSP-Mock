@@ -3,9 +3,12 @@ import { getCustomRepository } from 'typeorm';
 
 import { getCustomerByEmail, getCustomerById } from '@shared/utils/getCustomer';
 import getMerchant from '@shared/utils/getMerchant';
+import CreatePayableService from '@modules/payables/services/CreatePayableService';
 import ICreateTransaction from '../dtos/ICreateTransaction';
 import ITransaction from '../dtos/ITransaction';
 import TransactionsRepository from '../infra/typeorm/repositories/TransactionsRepository';
+
+const createPayableService = new CreatePayableService();
 
 class CreateTransactionService {
   async execute(payload: ICreateTransaction): Promise<ITransaction> {
@@ -25,6 +28,8 @@ class CreateTransactionService {
 
     const transactionPayload = { ...payload, customer, merchant };
     const transaction = await transactionsRepository.create(transactionPayload);
+
+    createPayableService.execute(transaction);
 
     const responseTransaction: ITransaction = {
       id: transaction.id,

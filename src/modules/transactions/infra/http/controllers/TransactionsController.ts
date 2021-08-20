@@ -17,7 +17,7 @@ export default class TransactionsController {
   }
 
   public async listOne(req: Request, res: Response): Promise<Response> {
-    const { id } = req.body;
+    const { id } = req.params;
     const transaction = await listOneTransactionService.execute(id);
 
     return res.json(transaction);

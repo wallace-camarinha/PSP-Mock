@@ -1,4 +1,4 @@
-export default interface ITransaction {
+export default interface IPayable {
   id: string;
   amount: number;
   transaction_id: string;
