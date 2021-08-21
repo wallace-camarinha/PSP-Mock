@@ -6,5 +6,6 @@ const payablesController = new TransactionsController();
 
 payablesRouter.get('/:id', payablesController.listOne);
 payablesRouter.get('/', payablesController.listAll);
+payablesRouter.get('/dash', payablesController.payablesDash);
 
 export default payablesRouter;
