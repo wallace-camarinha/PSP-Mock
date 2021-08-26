@@ -7,14 +7,14 @@ interface Amounts {
   waitingCount: number;
 }
 
-let paidAmount: number;
-let paidCount: number;
-let waitingAmount: number;
-let waitingCount: number;
+let paidAmount = 0;
+let paidCount = 0;
+let waitingAmount = 0;
+let waitingCount = 0;
 
 export default function sumAmounts(payables: Payable[]): Amounts {
   payables?.forEach(payable => {
-    if (payable.status === 'waiting_funds') {
+    if (payable.status === 'paid') {
       paidAmount += payable.amount;
       paidCount += 1;
     } else {
@@ -22,7 +22,6 @@ export default function sumAmounts(payables: Payable[]): Amounts {
       waitingCount += 1;
     }
   });
-
   const amounts: Amounts = {
     paidAmount,
     paidCount,

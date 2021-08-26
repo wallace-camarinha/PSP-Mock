@@ -14,6 +14,7 @@ class PayableDashService {
     if (!payables) {
       throw new AppError('There are no payables for this Merchant', 200);
     }
+
     const amounts = sumAmounts(payables);
 
     const payableDash: IPayablesDash = {
