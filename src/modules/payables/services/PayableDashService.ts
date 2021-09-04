@@ -1,5 +1,5 @@
 import getMerchant from '@shared/utils/getMerchant';
-import AppError from 'errors/AppError';
+import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import IPayablesDash from '../dtos/IPayablesDash';
 import PayablesRepository from '../infra/typeorm/repositories/PayablesRepository';

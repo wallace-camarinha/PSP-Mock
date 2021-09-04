@@ -1,5 +1,5 @@
 import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
-import AppError from 'errors/AppError';
+import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import TransactionsRepository from '../infra/typeorm/repositories/TransactionsRepository';
 

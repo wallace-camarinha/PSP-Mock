@@ -1,27 +1,30 @@
-import { getCustomRepository } from 'typeorm';
-import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
-import AppError from 'errors/AppError';
+import { inject, injectable } from 'tsyringe';
+
+import AppError from '@shared/errors/AppError';
 import ICreateCustomer from '../dtos/ICreateCustomer';
 import Customer from '../infra/typeorm/entities/Customer';
+import ICustomersRepository from '../repositories/ICustomersRepository';
 
+@injectable()
 class CreateCustomerService {
+  constructor(
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
+  ) {}
+
   async execute(payload: ICreateCustomer): Promise<Customer> {
-    const customersRepository = getCustomRepository(CustomersRepository);
-
-    if (!payload.name) {
-      throw new AppError('Please enter a valid name!', 402);
+    if (!payload.name || !payload.email) {
+      throw new AppError('Please enter a valid name and e-mail!', 402);
     }
 
-    if (!payload.email) {
-      throw new AppError('Please enter a valid e-mail!', 402);
-    }
-
-    const userExists = await customersRepository.findByEmail(payload.email);
+    const userExists = await this.customersRepository.findByEmail(
+      payload.email,
+    );
     if (userExists) {
-      throw new AppError('User already exists!', 402);
+      throw new AppError('User already exists!', 401);
     }
 
-    const customer = await customersRepository.create(payload);
+    const customer = await this.customersRepository.create(payload);
 
     return customer;
   }

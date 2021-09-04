@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import AppError from 'errors/AppError';
+import AppError from '@shared/errors/AppError';
 import ICreateMerchant from '../dtos/ICreateMerchant';
 import Merchant from '../infra/typeorm/entities/Merchant';
 import MerchantsRepository from '../infra/typeorm/repositories/MerchantsRepository';

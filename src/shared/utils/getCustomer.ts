@@ -1,11 +1,13 @@
+import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
 import { getCustomRepository } from 'typeorm';
+import { container } from 'tsyringe';
+
 import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
 import ICreateCustomer from '@modules/customers/dtos/ICreateCustomer';
-import AppError from 'errors/AppError';
-import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
+import AppError from '@shared/errors/AppError';
 
-const createCustomerService = new CreateCustomerService();
+// const createCustomerService = container.resolve(CreateCustomerService);
 
 export async function getCustomerByEmail(
   payload: ICreateCustomer,

@@ -1,12 +1,30 @@
-import { getCustomRepository } from 'typeorm';
+import AppError from '@shared/errors/AppError';
+import { inject, injectable } from 'tsyringe';
 import Customer from '../infra/typeorm/entities/Customer';
-import CustomersRepository from '../infra/typeorm/repositories/CustomersRepository';
+import ICustomersRepository from '../repositories/ICustomersRepository';
 
+@injectable()
 class ListOneCustomerService {
-  async execute(customerId: string): Promise<Customer | undefined> {
-    const customersRepository = getCustomRepository(CustomersRepository);
-    const customer = await customersRepository.findById(customerId);
-    return customer;
+  constructor(
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
+  ) {}
+
+  async execute(
+    customerId: string,
+    email: string,
+  ): Promise<Customer | undefined> {
+    if (customerId) {
+      const customer = await this.customersRepository.findById(customerId);
+      return customer;
+    }
+
+    if (email) {
+      const customer = await this.customersRepository.findByEmail(email);
+      return customer;
+    }
+
+    throw new AppError('Please, provide a "customer_id" or an "e-mail"!');
   }
 }
 

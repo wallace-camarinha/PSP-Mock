@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import ICreateMerchant from '@modules/merchants/dtos/ICreateMerchant';
 import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 
-import AppError from 'errors/AppError';
+import AppError from '@shared/errors/AppError';
 import Merchant from '../entities/Merchant';
 
 @EntityRepository(Merchant)

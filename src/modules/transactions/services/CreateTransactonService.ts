@@ -1,4 +1,4 @@
-import AppError from 'errors/AppError';
+import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 
 import { getCustomerByEmail, getCustomerById } from '@shared/utils/getCustomer';

@@ -1,4 +1,4 @@
-import { EntityRepository, getRepository, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
 import ICreateCustomer from '@modules/customers/dtos/ICreateCustomer';
@@ -6,7 +6,6 @@ import ICustomersRepository from '@modules/customers/repositories/ICustomersRepo
 
 import Customer from '../entities/Customer';
 
-@EntityRepository(Customer)
 class CustomersRepository implements ICustomersRepository {
   private ormRepository: Repository<Customer>;
 

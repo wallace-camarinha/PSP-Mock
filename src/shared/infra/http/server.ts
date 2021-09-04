@@ -1,18 +1,21 @@
 /* eslint-disable no-console */
-
 import 'reflect-metadata';
-import '../typeorm';
 
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
-import AppError from 'errors/AppError';
+
+import AppError from '@shared/errors/AppError';
 import routes from './routes';
+
+import '@shared/infra/typeorm';
+import '@shared/container';
 
 const app = express();
 
 app.use(express.json());
 app.use(routes);
 
+// Error handler
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
     if (err instanceof AppError) {
