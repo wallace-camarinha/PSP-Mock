@@ -13,6 +13,9 @@ class Merchant {
   @Column()
   name: string;
 
+  @Column()
+  document_number: string;
+
   @CreateDateColumn()
   created_at?: Date;
 }

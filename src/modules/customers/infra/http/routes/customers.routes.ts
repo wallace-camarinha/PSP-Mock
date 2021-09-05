@@ -5,7 +5,7 @@ const customersRouter = Router();
 const customersController = new CustomersController();
 
 customersRouter.post('/', customersController.create);
-customersRouter.get('/:id', customersController.listOne);
-customersRouter.get('/', customersController.listAll);
+customersRouter.get('/', customersController.listOne);
+customersRouter.get('/list', customersController.listAll);
 
 export default customersRouter;

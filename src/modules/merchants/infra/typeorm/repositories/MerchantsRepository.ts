@@ -19,6 +19,7 @@ class MerchantsRepository implements IMerchantsRepository {
     const merchant = this.ormRepository.create({
       id: uuid(),
       name: payload.name,
+      document_number: payload.cnpj,
     });
 
     await this.ormRepository.save(merchant);
@@ -43,8 +44,12 @@ class MerchantsRepository implements IMerchantsRepository {
     return responseMerchant;
   }
 
-  public async findByName(name: string): Promise<Merchant | undefined> {
-    const merchant = await this.ormRepository.findOne({ where: { name } });
+  public async findByDocument(
+    documentNumber: string,
+  ): Promise<Merchant | undefined> {
+    const merchant = await this.ormRepository.findOne({
+      where: { document_number: documentNumber },
+    });
 
     return merchant;
   }

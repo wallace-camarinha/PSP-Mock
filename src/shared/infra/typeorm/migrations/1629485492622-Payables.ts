@@ -24,6 +24,10 @@ export default class Payables1629485492622 implements MigrationInterface {
             type: 'int',
           },
           {
+            name: 'payment_method',
+            type: 'varchar',
+          },
+          {
             name: 'merchant_id',
             type: 'uuid',
           },
@@ -55,12 +59,16 @@ export default class Payables1629485492622 implements MigrationInterface {
             referencedTableName: 'merchants',
             referencedColumnNames: ['id'],
             columnNames: ['merchant_id'],
+            onDelete: 'SET NULL',
+            onUpdate: 'CASCADE',
           },
           {
             name: 'FK_transaction',
             referencedTableName: 'transactions',
             referencedColumnNames: ['id'],
             columnNames: ['transaction_id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
           },
         ],
       }),

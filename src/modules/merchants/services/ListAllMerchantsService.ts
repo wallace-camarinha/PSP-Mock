@@ -1,11 +1,17 @@
-import { getCustomRepository } from 'typeorm';
-import Merchant from '../infra/typeorm/entities/Merchant';
-import MerchantsRepository from '../infra/typeorm/repositories/MerchantsRepository';
+import { inject, injectable } from 'tsyringe';
 
+import Merchant from '../infra/typeorm/entities/Merchant';
+import IMerchantsRepository from '../repositories/IMerchantsRepository';
+
+@injectable()
 class ListAllMerchantsService {
+  constructor(
+    @inject('MerchantsRepository')
+    private merchantsRepository: IMerchantsRepository,
+  ) {}
+
   async execute(): Promise<Merchant[] | undefined> {
-    const merchantsRepository = getCustomRepository(MerchantsRepository);
-    const merchants = await merchantsRepository.findAll();
+    const merchants = await this.merchantsRepository.findAll();
     return merchants;
   }
 }

@@ -1,23 +1,33 @@
-import { getCustomRepository } from 'typeorm';
+import { injectable, inject } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
 import ICreateMerchant from '../dtos/ICreateMerchant';
 import Merchant from '../infra/typeorm/entities/Merchant';
-import MerchantsRepository from '../infra/typeorm/repositories/MerchantsRepository';
+import IMerchantsRepository from '../repositories/IMerchantsRepository';
 
+@injectable()
 class CreateMerchantService {
-  async execute(payload: ICreateMerchant): Promise<Merchant> {
-    const merchantsRepository = getCustomRepository(MerchantsRepository);
+  constructor(
+    @inject('MerchantsRepository')
+    private merchantsRepository: IMerchantsRepository,
+  ) {}
 
-    if (!payload.name) {
-      throw new AppError('Please enter a valid merchant name!', 402);
+  async execute(payload: ICreateMerchant): Promise<Merchant> {
+    if (!payload.cnpj || !payload.name) {
+      throw new AppError(
+        'Please enter a valid document number and a name!',
+        402,
+      );
     }
 
-    const merchantExists = await merchantsRepository.findByName(payload.name);
+    const merchantExists = await this.merchantsRepository.findByDocument(
+      payload.cnpj,
+    );
     if (merchantExists) {
       throw new AppError('Merchant already exists!', 402);
     }
 
-    const merchant = await merchantsRepository.create(payload);
+    const merchant = await this.merchantsRepository.create(payload);
 
     return merchant;
   }

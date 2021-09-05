@@ -16,6 +16,10 @@ export default class Merchants1629325679602 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'document_number',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

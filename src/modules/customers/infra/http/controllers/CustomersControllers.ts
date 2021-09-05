@@ -7,12 +7,10 @@ import ListOneCustomerService from '@modules/customers/services/ListOneCustomerS
 
 import ICreateCustomer from '@modules/customers/dtos/ICreateCustomer';
 
-const createCustomer = container.resolve(CreateCustomerService);
-// const listOneCustomer = container.resolve(ListOneCustomerService);
-// const listAllCustomers = container.resolve(ListAllCustomersService);
-
 export default class CustomersController {
   public async create(req: Request, res: Response): Promise<Response> {
+    const createCustomer = container.resolve(CreateCustomerService);
+
     const payload: ICreateCustomer = req.body;
     const customer = await createCustomer.execute(payload);
 
@@ -20,6 +18,8 @@ export default class CustomersController {
   }
 
   public async listOne(req: Request, res: Response): Promise<Response> {
+    const listOneCustomer = container.resolve(ListOneCustomerService);
+
     const { id, email } = req.body;
     const customer = await listOneCustomer.execute(id, email);
 
@@ -27,6 +27,8 @@ export default class CustomersController {
   }
 
   public async listAll(req: Request, res: Response): Promise<Response> {
+    const listAllCustomers = container.resolve(ListAllCustomersService);
+
     const customers = await listAllCustomers.execute();
 
     return res.json(customers);
