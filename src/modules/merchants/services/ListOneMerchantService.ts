@@ -13,7 +13,7 @@ class ListOneMerchantService {
 
   async execute(
     merchantId: string,
-    documentNumber: string,
+    documentNumber?: string,
   ): Promise<Merchant | undefined> {
     if (merchantId) {
       const merchant = await this.merchantsRepository.findById(merchantId);

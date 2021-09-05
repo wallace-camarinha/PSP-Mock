@@ -1,11 +1,16 @@
 import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
-import { getCustomRepository } from 'typeorm';
-import TransactionsRepository from '../infra/typeorm/repositories/TransactionsRepository';
+import { inject, injectable } from 'tsyringe';
+import ITransactionsRepository from '../repositories/ITransactionsRepository';
 
+@injectable()
 class ListOneTransactionsService {
+  constructor(
+    @inject('TransactionsRepository')
+    private transactionsRepository: ITransactionsRepository,
+  ) {}
+
   async execute(merchantId: string): Promise<Transaction | undefined> {
-    const transactionsRepository = getCustomRepository(TransactionsRepository);
-    const transaction = await transactionsRepository.findById(merchantId);
+    const transaction = await this.transactionsRepository.findById(merchantId);
     return transaction;
   }
 }

@@ -11,8 +11,8 @@ class ListOneCustomerService {
   ) {}
 
   async execute(
-    customerId: string,
-    email: string,
+    customerId?: string,
+    email?: string,
   ): Promise<Customer | undefined> {
     if (customerId) {
       const customer = await this.customersRepository.findById(customerId);

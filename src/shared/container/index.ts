@@ -6,12 +6,20 @@ import CustomersRepository from '@modules/customers/infra/typeorm/repositories/C
 import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 import MerchantsRepository from '@modules/merchants/infra/typeorm/repositories/MerchantsRepository';
 
-container.register<ICustomersRepository>(
+import ITransactionsRepository from '@modules/transactions/repositories/ITransactionsRepository';
+import TransactionsRepository from '@modules/transactions/infra/typeorm/repositories/TransactionsRepository';
+
+container.registerSingleton<ICustomersRepository>(
   'CustomersRepository',
   CustomersRepository,
 );
 
-container.register<IMerchantsRepository>(
+container.registerSingleton<IMerchantsRepository>(
   'MerchantsRepository',
   MerchantsRepository,
+);
+
+container.registerSingleton<ITransactionsRepository>(
+  'TransactionsRepository',
+  TransactionsRepository,
 );

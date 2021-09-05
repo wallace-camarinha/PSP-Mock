@@ -1,16 +1,21 @@
-import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import { inject, injectable } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
-import TransactionsRepository from '../infra/typeorm/repositories/TransactionsRepository';
+import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import ITransactionsRepository from '../repositories/ITransactionsRepository';
 
+@injectable()
 class ListAllTransactionsService {
-  async execute(merchantId: string): Promise<Transaction[] | undefined> {
-    const transactionsRepository = getCustomRepository(TransactionsRepository);
+  constructor(
+    @inject('TransactionsRepository')
+    private transactionsRepository: ITransactionsRepository,
+  ) {}
 
+  async execute(merchantId: string): Promise<Transaction[] | undefined> {
     if (!merchantId) {
       throw new AppError('Invalid merchant id', 402);
     }
-    const transactions = await transactionsRepository.findAll(merchantId);
+    const transactions = await this.transactionsRepository.findAll(merchantId);
     return transactions;
   }
 }

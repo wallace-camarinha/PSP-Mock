@@ -14,7 +14,7 @@ class CreateCustomerService {
 
   async execute(payload: ICreateCustomer): Promise<Customer> {
     if (!payload.name || !payload.email) {
-      throw new AppError('Please enter a valid name and e-mail!', 402);
+      throw new AppError('Please enter a valid customer name and e-mail!', 402);
     }
 
     const userExists = await this.customersRepository.findByEmail(
