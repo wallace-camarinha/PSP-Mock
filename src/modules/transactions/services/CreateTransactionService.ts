@@ -10,8 +10,6 @@ import ITransaction from '../dtos/ITransaction';
 import ICreateTransaction from '../dtos/ICreateTransaction';
 import ITransactionsRepository from '../repositories/ITransactionsRepository';
 
-const createPayableService = new CreatePayableService();
-
 @injectable()
 class CreateTransactionService {
   constructor(
@@ -23,6 +21,7 @@ class CreateTransactionService {
     const listOneCustomer = container.resolve(ListOneCustomerService);
     const createCustomer = container.resolve(CreateCustomerService);
     const listOneMerchant = container.resolve(ListOneMerchantService);
+    const createPayableService = container.resolve(CreatePayableService);
 
     let { customer } = payload;
 
@@ -42,7 +41,14 @@ class CreateTransactionService {
       throw new AppError('Invalid Merchant', 400);
     }
 
-    const transactionPayload = { ...payload, customer, merchant };
+    const merchantName = merchant.name;
+
+    const transactionPayload = {
+      ...payload,
+      customer,
+      merchant,
+      merchant_name: merchantName,
+    };
     const transaction = await this.transactionsRepository.create(
       transactionPayload,
     );

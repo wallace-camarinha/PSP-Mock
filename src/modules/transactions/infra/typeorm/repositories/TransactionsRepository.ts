@@ -29,6 +29,7 @@ class TransactionsRepository implements ITransactionsRepository {
       id: uuid(),
       customer_id: payload.customer.id,
       merchant_id: payload.merchant_id,
+      merchant_name: payload.merchant_name,
       amount: payload.amount,
       description: payload.description,
       payment_method: payload.payment_method,

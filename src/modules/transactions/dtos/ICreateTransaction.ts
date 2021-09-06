@@ -1,5 +1,6 @@
 export default interface ICreateTransaction {
   merchant_id: string;
+  merchant_name?: string;
   customer_id?: string;
   amount: number;
   description: string;

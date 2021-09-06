@@ -1,11 +1,11 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 
+import calculatePaymentDate from '@modules/payables/utils/calculatePaylmentDate';
+import calculateFee from '@modules/payables/utils/calculateFee';
+
 import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
 import IPayablesRepository from '@modules/payables/repositories/IPayablesRepository';
-import getMerchant from '@shared/utils/getMerchant';
-import calculateFee from '@modules/payables/utils/calculateFee';
-import calculatePaymentDate from '@modules/payables/utils/calculatePaylmentDate';
 import Payable from '../entities/Payable';
 
 @EntityRepository(Payable)
@@ -17,7 +17,6 @@ class PayablesRepository implements IPayablesRepository {
   }
 
   public async create(transaction: Transaction): Promise<Payable> {
-    const merchant = await getMerchant(transaction.merchant_id);
     const paymentMethod = transaction.payment_method;
     const payable = this.ormRepository.create({
       id: uuid(),
@@ -25,7 +24,7 @@ class PayablesRepository implements IPayablesRepository {
       transaction_id: transaction.id,
       transaction_amount: transaction.amount,
       merchant_id: transaction.merchant_id,
-      merchant_name: merchant.name,
+      merchant_name: transaction.merchant_name,
       status: paymentMethod === 'credit_card' ? 'waiting_funds' : 'paid',
       fee: paymentMethod === 'credit_card' ? 0.05 : 0.03,
       payment_date: calculatePaymentDate(paymentMethod, transaction.created_at),

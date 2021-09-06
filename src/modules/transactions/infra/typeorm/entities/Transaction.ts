@@ -9,6 +9,9 @@ class Transaction {
   merchant_id: string;
 
   @Column()
+  merchant_name: string;
+
+  @Column()
   customer_id?: string;
 
   @Column()

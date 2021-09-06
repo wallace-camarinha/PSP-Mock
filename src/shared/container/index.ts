@@ -9,6 +9,9 @@ import MerchantsRepository from '@modules/merchants/infra/typeorm/repositories/M
 import ITransactionsRepository from '@modules/transactions/repositories/ITransactionsRepository';
 import TransactionsRepository from '@modules/transactions/infra/typeorm/repositories/TransactionsRepository';
 
+import IPayablesRepository from '@modules/payables/repositories/IPayablesRepository';
+import PayablesRepository from '@modules/payables/infra/typeorm/repositories/PayablesRepository';
+
 container.registerSingleton<ICustomersRepository>(
   'CustomersRepository',
   CustomersRepository,
@@ -22,4 +25,9 @@ container.registerSingleton<IMerchantsRepository>(
 container.registerSingleton<ITransactionsRepository>(
   'TransactionsRepository',
   TransactionsRepository,
+);
+
+container.registerSingleton<IPayablesRepository>(
+  'PayablesRepository',
+  PayablesRepository,
 );

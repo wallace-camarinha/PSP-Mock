@@ -16,6 +16,10 @@ export default class Transactions1629325758101 implements MigrationInterface {
             type: 'uuid',
           },
           {
+            name: 'merchant_name',
+            type: 'varchar',
+          },
+          {
             name: 'customer_id',
             type: 'uuid',
           },
