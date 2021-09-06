@@ -1,12 +1,17 @@
-import { getCustomRepository } from 'typeorm';
+import { inject, injectable } from 'tsyringe';
+
 import Payable from '../infra/typeorm/entities/Payable';
-import PayablesRepository from '../infra/typeorm/repositories/PayablesRepository';
+import IPayablesRepository from '../repositories/IPayablesRepository';
 
+@injectable()
 class ListOnePayablesService {
-  async execute(payableId: string): Promise<Payable | undefined> {
-    const payablesRepository = getCustomRepository(PayablesRepository);
+  constructor(
+    @inject('PayablesRepository')
+    private payablesRepository: IPayablesRepository,
+  ) {}
 
-    const payable = await payablesRepository.findById(payableId);
+  async execute(payableId: string): Promise<Payable | undefined> {
+    const payable = await this.payablesRepository.findById(payableId);
     return payable;
   }
 }

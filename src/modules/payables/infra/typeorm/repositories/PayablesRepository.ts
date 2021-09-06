@@ -23,6 +23,7 @@ class PayablesRepository implements IPayablesRepository {
       amount: calculateFee(transaction.amount, transaction.payment_method),
       transaction_id: transaction.id,
       transaction_amount: transaction.amount,
+      payment_method: transaction.payment_method,
       merchant_id: transaction.merchant_id,
       merchant_name: transaction.merchant_name,
       status: paymentMethod === 'credit_card' ? 'waiting_funds' : 'paid',

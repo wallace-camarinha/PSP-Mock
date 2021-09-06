@@ -3,6 +3,7 @@ export default interface IPayable {
   amount: number;
   transaction_id: string;
   transaction_amount: number;
+  payment_method: string;
   merchant_id: string;
   merchant_name: string;
   status: string;

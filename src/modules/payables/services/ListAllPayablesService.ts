@@ -1,16 +1,21 @@
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
+
 import Payable from '../infra/typeorm/entities/Payable';
-import PayablesRepository from '../infra/typeorm/repositories/PayablesRepository';
+import IPayablesRepository from '../repositories/IPayablesRepository';
 
+@injectable()
 class ListAllPayablesService {
-  async execute(merchantId: string): Promise<Payable[] | undefined> {
-    const payablesRepository = getCustomRepository(PayablesRepository);
+  constructor(
+    @inject('PayablesRepository')
+    private payablesRepository: IPayablesRepository,
+  ) {}
 
+  async execute(merchantId: string): Promise<Payable[] | undefined> {
     if (!merchantId) {
       throw new AppError('Invalid merchant id', 402);
     }
-    const payables = await payablesRepository.findAll(merchantId);
+    const payables = await this.payablesRepository.findAll(merchantId);
     return payables;
   }
 }

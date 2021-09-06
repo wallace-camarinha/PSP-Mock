@@ -15,6 +15,9 @@ class Payable {
   transaction_amount: number;
 
   @Column()
+  payment_method: string;
+
+  @Column()
   merchant_id: string;
 
   @Column()
