@@ -6,6 +6,7 @@ import ListAllCustomersService from '@modules/customers/services/ListAllCustomer
 import ListOneCustomerService from '@modules/customers/services/ListOneCustomerService';
 
 import ICreateCustomer from '@modules/customers/dtos/ICreateCustomer';
+import AppError from '@shared/errors/AppError';
 
 export default class CustomersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -22,6 +23,10 @@ export default class CustomersController {
 
     const { id, email } = req.body;
     const customer = await listOneCustomer.execute(id, email);
+
+    if (!customer) {
+      throw new AppError('Customer not found!', 404);
+    }
 
     return res.json(customer);
   }

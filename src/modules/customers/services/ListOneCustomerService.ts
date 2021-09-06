@@ -1,4 +1,3 @@
-import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import Customer from '../infra/typeorm/entities/Customer';
 import ICustomersRepository from '../repositories/ICustomersRepository';
@@ -14,17 +13,17 @@ class ListOneCustomerService {
     customerId?: string,
     email?: string,
   ): Promise<Customer | undefined> {
+    let customer: Customer | undefined;
+
     if (customerId) {
-      const customer = await this.customersRepository.findById(customerId);
-      return customer;
+      customer = await this.customersRepository.findById(customerId);
     }
 
     if (email) {
-      const customer = await this.customersRepository.findByEmail(email);
-      return customer;
+      customer = await this.customersRepository.findByEmail(email);
     }
 
-    throw new AppError('Please, provide a "customer_id" or an "e-mail"!');
+    return customer;
   }
 }
 

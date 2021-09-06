@@ -5,6 +5,7 @@ import ICreateMerchant from '@modules/merchants/dtos/ICreateMerchant';
 import CreateMerchantService from '@modules/merchants/services/CreateMerchantService';
 import ListOneMerchantService from '@modules/merchants/services/ListOneMerchantService';
 import ListAllMerchantsService from '@modules/merchants/services/ListAllMerchantsService';
+import AppError from '@shared/errors/AppError';
 
 export default class MerchantsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -21,6 +22,10 @@ export default class MerchantsController {
 
     const { id, cnpj: documentNumber } = req.body;
     const merchant = await listOneMerchantService.execute(id, documentNumber);
+
+    if (!merchant) {
+      throw new AppError('Merchant not found!', 404);
+    }
 
     return res.json(merchant);
   }

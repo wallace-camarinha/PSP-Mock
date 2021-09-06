@@ -48,7 +48,7 @@ Além disso é bom ter um editor para trabalhar com o código como [VSCode](http
 $ git clone <https://github.com/wallace-camarinha/Pagarme-Challenge>
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd nlw1
+$ cd pagarme-challenge
 
 # Instale as dependências
 $ npm install
@@ -80,11 +80,12 @@ URL Base: http://localhost:5555
 O objeto ```merchant``` permite a criação de uma loja na aplicação. Um ```merchant``` possui os seguintes atributos:
 
 
-| Atributos  |      Tipo     |           Descrição         |
-|:----------:|:-------------:|:---------------------------:|
-|     id     |  left-aligned |     Código do Merchant      |
-|    name    |    centered   |       Nome do Merchant      |
-| created_at | right-aligned | Data de criação do Merchant |
+|    Atributos    |      Tipo     |           Descrição         |
+|:---------------:|:-------------:|:---------------------------:|
+|         id      |     string    |     Código do Merchant      |
+|        name     |     string    |       Nome do Merchant      |
+| document_number |     string    |       Documento (CNPJ)      |
+|    created_at   |      date     | Data de criação do Merchant |
 <br>
 ---
 
@@ -106,18 +107,58 @@ ENDPOINT:
 BODY PARAMS:
 <br>
 
-* name<a style="color:red">*</a> -- `string`
+* name <a style="color:red">*</a> -- `string`
+* document <a style="color:red">*</a> -- `string`
 
 EXEMPLO:
 
     {
       "name": "Dracarys Store"
+      "cnpj": "12345678901234"
     }
 <br>
 
 ---
 <br>
 
+<h3>Listar um Merchant - <q style="color:LightGreen">GET</q></h3>
+
+Obtém um Merchant atráves do seu identificador `merchant_id` ou `cnpj`, passados no body da requisição.
+<br>
+<small>Items com <a style="color:red">*</a> são obrigatórios.</small>
+<br>
+<br>
+
+ENDPOINT:
+
+>`http://localhost:5555/merchants`
+<br>
+
+<br>
+
+BODY:
+<br>
+
+* merchant_id <a style="color:red">*</a> -- `string`
+</br>
+<small>Obrigatório quando não é enviado um `cnpj`</small>
+
+* cnpj <a style="color:red">*</a> -- `string`
+</br>
+<small>Obrigatório quando não é enviado um `merchant_id`</small>
+
+
+EXEMPLO:
+
+    {
+      "merchant_id": "a31b8a1d-f28b-4ba3-a27e-d85301aa8a9d"
+      "cnpj": "12345678901234"
+    }
+
+<br>
+
+---
+<br>
 
 <h3>Listar Merchants - <q style="color:LightGreen">GET</q></h3>
 
@@ -127,40 +168,11 @@ Lista todos os Merchants já criados na aplicação.
 
 ENDPOINT:
 
->`http://localhost:5555/merchants`
+>`http://localhost:5555/merchants/list`
 <br>
 
 ---
-<br>
 
-
-<h3>Listar um Merchant - <q style="color:LightGreen">GET</q></h3>
-
-Obtém um Merchant atráves do seu identificador `merchant_id`
-<br>
-<small>Items com <a style="color:red">*</a> são obrigatórios.</small>
-<br>
-<br>
-
-ENDPOINT:
-
->`http://localhost:5555/merchants/{merchant_id}`
-<br>
-
-<br>
-
-PATH PARAMS:
-<br>
-
-* merchant_id<a style="color:red">*</a> -- `string`
-
-EXEMPLO:
-
-    http://localhost:5555/merchants/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-
-<br>
-
----
 
 
 
