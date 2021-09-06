@@ -4,7 +4,7 @@ import ListAllMerchantsService from './ListAllMerchantsService';
 let fakeMerchantsRepository: FakeMerchantsRepository;
 let listAllMerchants: ListAllMerchantsService;
 
-describe('CreateMerchant', () => {
+describe('ListAllMerchants', () => {
   beforeEach(() => {
     fakeMerchantsRepository = new FakeMerchantsRepository();
     listAllMerchants = new ListAllMerchantsService(fakeMerchantsRepository);

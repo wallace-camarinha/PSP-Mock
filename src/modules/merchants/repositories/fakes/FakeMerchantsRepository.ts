@@ -25,9 +25,9 @@ class FakeMerchantsRepository implements IMerchantsRepository {
   }
 
   public async findById(id: string): Promise<Merchant | undefined> {
-    const merchant = this.merchants.find(merch => merch.id === id);
+    const findMerchant = this.merchants.find(merchant => merchant.id === id);
 
-    return merchant;
+    return findMerchant;
   }
 
   public async findByDocument(cnpj: string): Promise<Merchant | undefined> {

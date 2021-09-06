@@ -30,12 +30,12 @@ class FakeCustomersRepository implements ICustomersRepository {
     return findCustomer;
   }
 
-  public async findByEmail(cnpj: string): Promise<Customer | undefined> {
-    const findMerchant = this.customers.find(
-      customer => customer.email === cnpj,
+  public async findByEmail(email: string): Promise<Customer | undefined> {
+    const findCustomer = this.customers.find(
+      customer => customer.email === email,
     );
 
-    return findMerchant;
+    return findCustomer;
   }
 }
 
