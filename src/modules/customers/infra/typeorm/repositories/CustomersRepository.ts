@@ -1,5 +1,5 @@
 import { getRepository, Repository } from 'typeorm';
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid, validate } from 'uuid';
 
 import ICreateCustomer from '@modules/customers/dtos/ICreateCustomer';
 import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
@@ -33,14 +33,16 @@ class CustomersRepository implements ICustomersRepository {
     return merchantTransactions;
   }
 
-  public async findById(customerId: string): Promise<Customer | undefined> {
-    const customer = await this.ormRepository.findOne(customerId);
+  public async findOne(arg: string): Promise<Customer | undefined> {
+    let customer: Customer | undefined;
+    const isUuid = validate(arg);
 
-    return customer;
-  }
+    if (isUuid) {
+      customer = await this.ormRepository.findOne({ where: { id: arg } });
+      return customer;
+    }
 
-  public async findByEmail(email: string): Promise<Customer | undefined> {
-    const customer = await this.ormRepository.findOne({ where: { email } });
+    customer = await this.ormRepository.findOne({ where: { email: arg } });
 
     return customer;
   }

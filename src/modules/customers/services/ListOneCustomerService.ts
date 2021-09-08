@@ -13,15 +13,12 @@ class ListOneCustomerService {
     customerId?: string,
     email?: string,
   ): Promise<Customer | undefined> {
-    let customer: Customer | undefined;
-
-    if (customerId) {
-      customer = await this.customersRepository.findById(customerId);
+    let arg = customerId;
+    if (!arg) {
+      arg = email;
     }
 
-    if (email) {
-      customer = await this.customersRepository.findByEmail(email);
-    }
+    const customer = await this.customersRepository.findOne(arg);
 
     return customer;
   }

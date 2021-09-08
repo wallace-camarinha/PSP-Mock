@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { validate } from 'uuid';
 
 import ICreateMerchant from '@modules/merchants/dtos/ICreateMerchant';
 import CreateMerchantService from '@modules/merchants/services/CreateMerchantService';
@@ -21,6 +22,12 @@ export default class MerchantsController {
     const listOneMerchantService = container.resolve(ListOneMerchantService);
 
     const { merchant_id: id, cnpj: documentNumber } = req.body;
+
+    const isUuid = validate(id);
+    if (id !== undefined && !isUuid) {
+      throw new AppError('Invalid merchant_id!', 400);
+    }
+
     const merchant = await listOneMerchantService.execute(id, documentNumber);
 
     if (!merchant) {

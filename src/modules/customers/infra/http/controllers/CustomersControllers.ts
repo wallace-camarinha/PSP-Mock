@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { validate } from 'uuid';
 
 import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
 import ListAllCustomersService from '@modules/customers/services/ListAllCustomersService';
@@ -21,7 +22,12 @@ export default class CustomersController {
   public async listOne(req: Request, res: Response): Promise<Response> {
     const listOneCustomer = container.resolve(ListOneCustomerService);
 
-    const { id, email } = req.body;
+    const { customer_id: id, email } = req.body;
+    const isUuid = validate(id);
+    if (id !== undefined && !isUuid) {
+      throw new AppError('Invalid customer_id!', 400);
+    }
+
     const customer = await listOneCustomer.execute(id, email);
 
     if (!customer) {
