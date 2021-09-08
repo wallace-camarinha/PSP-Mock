@@ -1,10 +1,9 @@
 import { EntityRepository, getRepository, Repository } from 'typeorm';
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid, validate } from 'uuid';
 
 import ICreateMerchant from '@modules/merchants/dtos/ICreateMerchant';
 import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 
-import AppError from '@shared/errors/AppError';
 import Merchant from '../entities/Merchant';
 
 @EntityRepository(Merchant)
@@ -33,23 +32,19 @@ class MerchantsRepository implements IMerchantsRepository {
     return merchants;
   }
 
-  public async findById(merchantId: string): Promise<Merchant> {
-    const merchant = await this.ormRepository.findOne(merchantId);
-    if (!merchant) {
-      throw new AppError('Merchant not found', 404);
-    }
+  public async findOne(arg: string): Promise<Merchant | undefined> {
+    let merchant: Merchant | undefined;
+    const isUuid = validate(arg);
 
-    const { created_at, ...responseMerchant } = merchant;
-
-    return responseMerchant;
-  }
-
-  public async findByDocument(
-    documentNumber: string,
-  ): Promise<Merchant | undefined> {
-    const merchant = await this.ormRepository.findOne({
-      where: { document_number: documentNumber },
+    merchant = await this.ormRepository.findOne({
+      where: { document_number: arg },
     });
+
+    if (isUuid) {
+      merchant = await this.ormRepository.findOne({
+        where: { id: arg },
+      });
+    }
 
     return merchant;
   }

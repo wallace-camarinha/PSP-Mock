@@ -12,22 +12,21 @@ class ListOneMerchantService {
   ) {}
 
   async execute(
-    merchantId: string,
-    documentNumber?: string,
+    cnpj?: string,
+    merchantId?: string,
   ): Promise<Merchant | undefined> {
-    if (merchantId) {
-      const merchant = await this.merchantsRepository.findById(merchantId);
-      return merchant;
+    let arg = merchantId;
+    if (!arg) {
+      arg = cnpj;
     }
 
-    if (documentNumber) {
-      const merchant = await this.merchantsRepository.findByDocument(
-        documentNumber,
-      );
-      return merchant;
+    const merchant = await this.merchantsRepository.findOne(arg);
+
+    if (!merchant) {
+      throw new AppError('Merchant not found!', 404);
     }
 
-    throw new AppError('Please enter a document number or merchant_id!');
+    return merchant;
   }
 }
 

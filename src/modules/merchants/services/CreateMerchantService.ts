@@ -20,9 +20,7 @@ class CreateMerchantService {
       );
     }
 
-    const merchantExists = await this.merchantsRepository.findByDocument(
-      payload.cnpj,
-    );
+    const merchantExists = await this.merchantsRepository.findOne(payload.cnpj);
     if (merchantExists) {
       throw new AppError('Merchant already exists!', 402);
     }

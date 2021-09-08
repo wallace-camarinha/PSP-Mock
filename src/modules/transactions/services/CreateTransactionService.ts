@@ -19,8 +19,8 @@ class CreateTransactionService {
 
   async execute(payload: ICreateTransaction): Promise<ITransaction> {
     const listOneCustomer = container.resolve(ListOneCustomerService);
-    const createCustomer = container.resolve(CreateCustomerService);
     const listOneMerchant = container.resolve(ListOneMerchantService);
+    const createCustomer = container.resolve(CreateCustomerService);
     const createPayableService = container.resolve(CreatePayableService);
 
     let { customer } = payload;

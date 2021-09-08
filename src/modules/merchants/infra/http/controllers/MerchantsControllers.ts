@@ -20,7 +20,7 @@ export default class MerchantsController {
   public async listOne(req: Request, res: Response): Promise<Response> {
     const listOneMerchantService = container.resolve(ListOneMerchantService);
 
-    const { id, cnpj: documentNumber } = req.body;
+    const { merchant_id: id, cnpj: documentNumber } = req.body;
     const merchant = await listOneMerchantService.execute(id, documentNumber);
 
     if (!merchant) {

@@ -24,16 +24,14 @@ class FakeMerchantsRepository implements IMerchantsRepository {
     return this.merchants;
   }
 
-  public async findById(id: string): Promise<Merchant | undefined> {
-    const findMerchant = this.merchants.find(merchant => merchant.id === id);
+  public async findOne(arg: string): Promise<Merchant | undefined> {
+    let findMerchant = this.merchants.find(merchant => merchant.id === arg);
 
-    return findMerchant;
-  }
-
-  public async findByDocument(cnpj: string): Promise<Merchant | undefined> {
-    const findMerchant = this.merchants.find(
-      merchant => merchant.document_number === cnpj,
-    );
+    if (!findMerchant) {
+      findMerchant = this.merchants.find(
+        merchant => merchant.document_number === arg,
+      );
+    }
 
     return findMerchant;
   }
