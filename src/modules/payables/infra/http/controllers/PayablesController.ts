@@ -1,6 +1,6 @@
 import ListAllPayablesService from '@modules/payables/services/ListAllPayablesService';
 import ListOnePayablesService from '@modules/payables/services/ListOnePayableService';
-import PayableDashService from '@modules/payables/services/PayableDashService';
+import PayableDashService from '@modules/payables/services/PayablesDashService';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 

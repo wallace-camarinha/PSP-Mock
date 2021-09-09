@@ -14,10 +14,6 @@ class CreatePayableService {
   ) {}
 
   async execute(transaction: Transaction): Promise<Payable> {
-    if (!transaction.merchant_id) {
-      throw new AppError('Invalid Merchant', 400);
-    }
-
     const payable = await this.payablesRepository.create(transaction);
 
     return payable;

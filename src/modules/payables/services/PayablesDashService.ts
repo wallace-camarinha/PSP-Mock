@@ -1,7 +1,7 @@
-import { container, inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
-import ListOneMerchantService from '@modules/merchants/services/ListOneMerchantService';
+import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 import IPayablesDash from '../dtos/IPayablesDash';
 import IPayablesRepository from '../repositories/IPayablesRepository';
 import sumAmounts from '../utils/sumAmounts';
@@ -11,19 +11,21 @@ class PayableDashService {
   constructor(
     @inject('PayablesRepository')
     private payablesRepository: IPayablesRepository,
+
+    @inject('MerchantsRepository')
+    private merchantsRepository: IMerchantsRepository,
   ) {}
 
   async execute(merchantId: string): Promise<IPayablesDash> {
-    const listOneMerchant = container.resolve(ListOneMerchantService);
-
-    const payables = await this.payablesRepository.findAll(merchantId);
-    const merchant = await listOneMerchant.execute(merchantId);
+    const merchant = await this.merchantsRepository.findOne(merchantId);
 
     if (!merchant) {
-      throw new AppError('Invalid merchant', 400);
+      throw new AppError('Merchant not found!', 400);
     }
 
-    if (!payables) {
+    const payables = await this.payablesRepository.findAll(merchantId);
+
+    if (!payables?.length) {
       throw new AppError('There are no payables for this Merchant', 200);
     }
 
