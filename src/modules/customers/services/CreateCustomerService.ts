@@ -17,9 +17,7 @@ class CreateCustomerService {
       throw new AppError('Please enter a valid customer name and e-mail!', 402);
     }
 
-    const userExists = await this.customersRepository.findByEmail(
-      payload.email,
-    );
+    const userExists = await this.customersRepository.findOne(payload.email);
     if (userExists) {
       throw new AppError('User already exists!', 401);
     }

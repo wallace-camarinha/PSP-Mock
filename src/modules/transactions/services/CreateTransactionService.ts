@@ -1,42 +1,47 @@
 import AppError from '@shared/errors/AppError';
-import { container, inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
-import ListOneCustomerService from '@modules/customers/services/ListOneCustomerService';
-import ListOneMerchantService from '@modules/merchants/services/ListOneMerchantService';
-import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
-import CreatePayableService from '@modules/payables/services/CreatePayableService';
+import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
+import IPayablesRepository from '@modules/payables/repositories/IPayablesRepository';
 
+import ITransactionsRepository from '../repositories/ITransactionsRepository';
 import ITransaction from '../dtos/ITransaction';
 import ICreateTransaction from '../dtos/ICreateTransaction';
-import ITransactionsRepository from '../repositories/ITransactionsRepository';
 
 @injectable()
 class CreateTransactionService {
   constructor(
     @inject('TransactionsRepository')
     private transactionsRepository: ITransactionsRepository,
+
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
+
+    @inject('MerchantsRepository')
+    private merchantsRepository: IMerchantsRepository,
+
+    @inject('PayablesRepository')
+    private payablesRepository: IPayablesRepository,
   ) {}
 
   async execute(payload: ICreateTransaction): Promise<ITransaction> {
-    const listOneCustomer = container.resolve(ListOneCustomerService);
-    const listOneMerchant = container.resolve(ListOneMerchantService);
-    const createCustomer = container.resolve(CreateCustomerService);
-    const createPayableService = container.resolve(CreatePayableService);
-
     let { customer } = payload;
 
-    const customerExists = await listOneCustomer.execute(
-      payload.customer_id,
-      customer.email,
+    const customerExists = await this.customersRepository.findOne(
+      payload.customer_id || customer.email,
     );
 
     if (customerExists) {
       customer = customerExists;
     } else {
-      customer = await createCustomer.execute(customer);
+      customer = await this.customersRepository.create(customer);
     }
 
-    const merchant = await listOneMerchant.execute(payload.merchant_id);
+    const merchant = await this.merchantsRepository.findOne(
+      payload.merchant_id,
+    );
+
     if (!merchant) {
       throw new AppError('Invalid Merchant', 400);
     }
@@ -53,7 +58,7 @@ class CreateTransactionService {
       transactionPayload,
     );
 
-    createPayableService.execute(transaction);
+    this.payablesRepository.create(transaction);
 
     const responseTransaction: ITransaction = {
       id: transaction.id,
