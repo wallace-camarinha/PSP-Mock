@@ -36,7 +36,7 @@ class PayablesRepository implements IPayablesRepository {
     return payable;
   }
 
-  public async findAll(merchantId: string): Promise<Payable[] | undefined> {
+  public async findAll(merchantId: string): Promise<Payable[]> {
     const merchantPayables = this.ormRepository.find({
       where: { merchant_id: merchantId },
     });

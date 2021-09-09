@@ -11,7 +11,7 @@ class ListAllPayablesService {
     private payablesRepository: IPayablesRepository,
   ) {}
 
-  async execute(merchantId: string): Promise<Payable[] | undefined> {
+  async execute(merchantId: string): Promise<Payable[]> {
     if (!merchantId) {
       throw new AppError('Invalid merchant id', 402);
     }

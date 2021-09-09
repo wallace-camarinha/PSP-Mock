@@ -25,7 +25,7 @@ class PayableDashService {
 
     const payables = await this.payablesRepository.findAll(merchantId);
 
-    if (!payables?.length) {
+    if (!payables.length) {
       throw new AppError('There are no payables for this Merchant', 200);
     }
 

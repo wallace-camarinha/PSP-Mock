@@ -33,7 +33,7 @@ class FakePayablesRepository implements IPayablesRepository {
     return payable;
   }
 
-  public async findAll(merchantId: string): Promise<Payable[] | undefined> {
+  public async findAll(merchantId: string): Promise<Payable[]> {
     const payables = this.payables.filter(
       payable => payable.merchant_id === merchantId,
     );
