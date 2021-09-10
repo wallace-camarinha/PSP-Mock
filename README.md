@@ -1,100 +1,107 @@
-<h1 align="center">Desafio Pagar.me - Backend</h1>
+<h1 align="center">PSP-Mock API</h1>
 
 <h3 align="center">
-  Esse desafio consiste em criar uma applicação que simule um <strong>PSP - Payment Service Provider</strong> utilizando <a href="https://nodejs.org/en/">NodeJS</a>
+  This application consists of a <strong>PSP - Payment Service Provider</strong> simulator, aiming to mock real world transactions and it's specifications. With two main functionalities <strong>cash-in</strong> and <strong>cash-out</strong>.
 </h3>
 <br>
+<h4 align="center">O PSP-Mock was built in <a href="https://nodejs.org/en/">NodeJS</a>, with <a href="https://www.typescriptlang.org/">Typescript</a>
+
+
+<br>
+<br>
+
 <h4 align="center">
-	🚧   🚀 Em desenvolvimento...  🚧
+	🚧   🚀 Ongoing development...  🚧
 </h4>
 <br>
 
-Tabela de conteúdos
+Sumary
 =================
 <!--ts-->
-   * [Sobre](#Sobre)
-   * [Como usar](#como-usar)
-      * [Pre Requisitos](#pre-requisitos)
-      * [Rodando o Backend](#rodando-o-backend)
-      * [Introdução](#introdução)
+   * [About](#About)
+   * [How to use](#how-to-use)
+      * [Requirements](#requirements)
+      * [Running the API](#running-the-api)
+      * [Introduction](#introduction)
       * [Merchant](#merchant)
-   * [Tecnologias](#tecnologias)
-   * [Tests](#testes)
+   * [Technology Stack](#technology-stack)
+   * [Tests](#tests)
 <!--te-->
 <br>
 <br>
 
-<!-- <h1 align="center">Sobre</h1> -->
+<!-- <h1 align="center">About</h1> -->
 
 
-<h1 align="center">Como Usar</h1>
+<h1 align="center">How to use</h1>
 
-## Pré-requisitos
+<h2> Requirements</h2>
 
-Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
+Before you begin, you're gonna need the following tools installed on your machine:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) and [Docker](https://www.docker.com/). You also need a platform to simulate requests, such as [Insomnia](https://insomnia.rest/download) or [Postman](https://www.postman.com/downloads/)
 <br>
-Além disso é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/), e uma plataforma para simular as requisições, como o [Insomnia](https://insomnia.rest/download) ou [Postman](https://www.postman.com/downloads/)
+It's also good to have an editor to work with the code, but it's not mandatory. A good example is: [VSCode](https://code.visualstudio.com/).
+
 
 <!-- Você pode utilizar este arquivo do Insomnia com as requisições utilizadas em desenvolvimento: download -->
 
 <br>
 <br>
 
-## Rodando o Backend
+## Running the API
 
 ```bash
-#Clone este repositório
+#Clone this repo
 $ git clone <https://github.com/wallace-camarinha/Pagarme-Challenge>
 
-# Acesse a pasta do projeto no terminal/cmd
-$ cd pagarme-challenge
+# Access the project's folder on your terminal/cmd
+$ cd psp-mock
 
-# Instale as dependências
+# Install the dependencies
 $ npm install
 
-# Execute a aplicação em modo de desenvolvimento
+# Execute the application locally
 $ npm run dev:server
 
-# O servidor inciará na porta:5555 - acesse <http://localhost:5555>
+# The server will stat on port:5555 - access: http://localhost:5555
 ```
 
 <br>
 <br>
 
-## Introdução
+## Introduction
 
-Este desafio foi desenvolvido seguindo padrões REST.
+This application was built following REST patterns.
 <br>
-As operações são feitas através de requiseções aos <strong>endpoints</strong>, utilizando verbos HTTP com as mensagens em [JSON](http://www.json.org/).
+Every request must be made to the <strong>endpoints</strong>, using HTTP verbs with standard "content/type" set to [JSON](http://www.json.org/).
 
 <br>
 
-URL Base: http://localhost:5555
+Base URL: http://localhost:5555
 <br>
-💡<small> Atualmente a aplicação roda localmente</small>
+💡<small> Currently the application only runs locally</small>
 
 <br>
 
 ## Merchant
-O objeto ```merchant``` permite a criação de uma loja na aplicação. Um ```merchant``` possui os seguintes atributos:
+The object ```merchant``` allow the creation of a store. A ```merchant``` has the following attributes:
 
 
-|    Atributos    |      Tipo     |           Descrição         |
+|    Attributes   |      Type     |         Description         |
 |:---------------:|:-------------:|:---------------------------:|
-|         id      |     string    |     Código do Merchant      |
-|        name     |     string    |       Nome do Merchant      |
-| document_number |     string    |       Documento (CNPJ)      |
-|    created_at   |      date     | Data de criação do Merchant |
+|         id      |     string    |    Merchant's identifier    |
+|        name     |     string    |       Merchant's name       |
+| document_number |     string    |        Document (CNPJ)      |
+|    created_at   |      date     |   Merchant's creation date  |
 <br>
 ---
 
 <br>
 
-<h3>Criar Merchant - <q style="color:DodgerBlue">POST</q></h3>
-Cria um Merchant na aplicação com o nome informado.
+<h3>Create a Merchant - Method: <q style="color:DodgerBlue">POST</q></h3>
+Creates a Merchant in the application.
 <br>
-<small>Items com <a style="color:red">*</a> são obrigatórios.</small>
+<small>Items with <a style="color:red">*</a> are mandatory.</small>
 <br>
 <br>
 
@@ -110,10 +117,10 @@ BODY PARAMS:
 * name <a style="color:red">*</a> -- `string`
 * document <a style="color:red">*</a> -- `string`
 
-EXEMPLO:
+EXAMPLE:
 
     {
-      "name": "Dracarys Store"
+      "name": "No Man's Store"
       "cnpj": "12345678901234"
     }
 <br>
@@ -121,11 +128,11 @@ EXEMPLO:
 ---
 <br>
 
-<h3>Listar um Merchant - <q style="color:LightGreen">GET</q></h3>
+<h3>List a Merchant - Method: <q style="color:LightGreen">GET</q></h3>
 
-Obtém um Merchant atráves do seu identificador `merchant_id` ou `cnpj`, passados no body da requisição.
+List a Merchant based on it's identifier `merchant_id` or `cnpj`, informed in the request's body.
 <br>
-<small>Items com <a style="color:red">*</a> são obrigatórios.</small>
+<small>Items with <a style="color:red">*</a> are mandatory.</small>
 <br>
 <br>
 
@@ -148,7 +155,7 @@ BODY:
 <small>Obrigatório quando não é enviado um `merchant_id`</small>
 
 
-EXEMPLO:
+EXAMPLE:
 
     {
       "merchant_id": "a31b8a1d-f28b-4ba3-a27e-d85301aa8a9d"
@@ -160,9 +167,9 @@ EXEMPLO:
 ---
 <br>
 
-<h3>Listar Merchants - <q style="color:LightGreen">GET</q></h3>
+<h3>List All Merchants - Method: <q style="color:LightGreen">GET</q></h3>
 
-Lista todos os Merchants já criados na aplicação.
+Lists a collection of all Merchants ever created in the application.
 <br>
 <br>
 
@@ -170,6 +177,8 @@ ENDPOINT:
 
 >`http://localhost:5555/merchants/list`
 <br>
+
+That simple!
 
 ---
 
@@ -214,9 +223,18 @@ ENDPOINT:
 <br>
 
 
-### Tecnologias
+<h3 align="center">Tecnologias</h3>
 
 As seguintes ferramentas foram usadas na construção do projeto:
 
+### Core
+
 - [Node.js](https://nodejs.org/en/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Express](https://expressjs.com/)
+
+### Database Related Dependencies
+
+- [PostgresSQL](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/)
+- [Typeorm](https://typeorm.io/)
