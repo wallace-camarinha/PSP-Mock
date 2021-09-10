@@ -52,7 +52,7 @@ It's also good to have an editor to work with the code, but it's not mandatory. 
 
 ```bash
 #Clone this repo
-$ git clone <https://github.com/wallace-camarinha/Pagarme-Challenge>
+$ git clone <https://github.com/wallace-camarinha/PSP-Mock>
 
 # Access the project's folder on your terminal/cmd
 $ cd psp-mock
