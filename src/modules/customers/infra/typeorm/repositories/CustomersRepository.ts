@@ -43,7 +43,6 @@ class CustomersRepository implements ICustomersRepository {
     }
 
     customer = await this.ormRepository.findOne({ where: { email: arg } });
-
     return customer;
   }
 }

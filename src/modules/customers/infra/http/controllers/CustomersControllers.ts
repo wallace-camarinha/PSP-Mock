@@ -23,17 +23,8 @@ export default class CustomersController {
     const listOneCustomer = container.resolve(ListOneCustomerService);
 
     const { customer_id: id, email } = req.body;
-    const isUuid = validate(id);
-    if (id !== undefined && !isUuid) {
-      throw new AppError('Invalid customer_id!', 400);
-    }
 
     const customer = await listOneCustomer.execute(id, email);
-
-    if (!customer) {
-      throw new AppError('Customer not found!', 404);
-    }
-
     return res.json(customer);
   }
 

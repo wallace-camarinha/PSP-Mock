@@ -13,28 +13,22 @@ class ListOneMerchantService {
   ) {}
 
   async execute(
-    documentNumber?: string,
     merchantId?: string,
+    documentNumber?: string,
   ): Promise<Merchant | undefined> {
-    let isUuid: boolean;
-
-    if (merchantId !== undefined) {
-      isUuid = validate(merchantId);
-      if (!isUuid) {
-        throw new AppError('Invalid merchant_id!', 400);
-      }
-    }
-
     let arg = merchantId;
     if (!arg) {
       arg = documentNumber;
     }
 
-    const merchant = await this.merchantsRepository.findOne(arg);
-
-    if (!merchant) {
-      throw new AppError('Merchant not found!', 404);
+    if (merchantId) {
+      const isUuid = validate(merchantId);
+      if (!isUuid) {
+        throw new AppError('Invalid merchant_id!', 400);
+      }
     }
+
+    const merchant = await this.merchantsRepository.findOne(arg);
 
     return merchant;
   }

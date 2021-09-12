@@ -16,13 +16,16 @@ class CreateMerchantService {
     if (!payload.cnpj || !payload.name) {
       throw new AppError(
         'Please enter a valid document number and a name!',
-        402,
+        400,
       );
     }
 
     const merchantExists = await this.merchantsRepository.findOne(payload.cnpj);
     if (merchantExists) {
-      throw new AppError('Merchant already exists!', 402);
+      throw new AppError(
+        'Merchant already exists with this document number!',
+        401,
+      );
     }
 
     const merchant = await this.merchantsRepository.create(payload);

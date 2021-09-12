@@ -11,9 +11,9 @@ describe('ListOneMerchant', () => {
     listOneMerchant = new ListOneMerchantService(fakeMerchantsRepository);
   });
 
-  it('Should be able to list one merchant passing the document_number', async () => {
+  it('Should be able to list one merchant passing the "merchant_id"', async () => {
     const merchant = await fakeMerchantsRepository.create({
-      name: 'Merchant2',
+      name: 'Merchant',
       cnpj: '321',
     });
 
@@ -22,7 +22,7 @@ describe('ListOneMerchant', () => {
     expect(findMerchant).toEqual(merchant);
   });
 
-  it('Should be able to list one merchant passing the id', async () => {
+  it('Should be able to list one merchant passing the "document_number"', async () => {
     const merchant = await fakeMerchantsRepository.create({
       name: 'Merchant2',
       cnpj: '321',
@@ -36,8 +36,8 @@ describe('ListOneMerchant', () => {
     expect(findMerchant).toEqual(merchant);
   });
 
-  it('Should not be able to list one merchant without the document_number or id', async () => {
-    await expect(listOneMerchant.execute('', '')).rejects.toBeInstanceOf(
+  it('Should not be able to list one merchant with an invalid "id"', async () => {
+    await expect(listOneMerchant.execute('123', '')).rejects.toBeInstanceOf(
       AppError,
     );
   });

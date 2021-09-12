@@ -36,15 +36,16 @@ class MerchantsRepository implements IMerchantsRepository {
     let merchant: Merchant | undefined;
     const isUuid = validate(arg);
 
-    merchant = await this.ormRepository.findOne({
-      where: { document_number: arg },
-    });
-
     if (isUuid) {
       merchant = await this.ormRepository.findOne({
         where: { id: arg },
       });
+      return merchant;
     }
+
+    merchant = await this.ormRepository.findOne({
+      where: { document_number: arg },
+    });
 
     return merchant;
   }
