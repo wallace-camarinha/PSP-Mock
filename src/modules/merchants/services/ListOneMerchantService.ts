@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { validate } from 'uuid';
 
 import AppError from '@shared/errors/AppError';
 import Merchant from '../infra/typeorm/entities/Merchant';
@@ -12,12 +13,21 @@ class ListOneMerchantService {
   ) {}
 
   async execute(
-    cnpj?: string,
+    documentNumber?: string,
     merchantId?: string,
   ): Promise<Merchant | undefined> {
+    let isUuid: boolean;
+
+    if (merchantId !== undefined) {
+      isUuid = validate(merchantId);
+      if (!isUuid) {
+        throw new AppError('Invalid merchant_id!', 400);
+      }
+    }
+
     let arg = merchantId;
     if (!arg) {
-      arg = cnpj;
+      arg = documentNumber;
     }
 
     const merchant = await this.merchantsRepository.findOne(arg);
