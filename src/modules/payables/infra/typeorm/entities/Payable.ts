@@ -1,4 +1,15 @@
-import { Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  PrimaryColumn,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
+
+import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import Merchant from '@modules/merchants/infra/typeorm/entities/Merchant';
 
 @Entity('payables')
 class Payable {
@@ -11,6 +22,10 @@ class Payable {
   @Column()
   transaction_id: string;
 
+  @OneToOne(() => Transaction)
+  @JoinColumn({ name: 'transaction_id' })
+  transaction: Transaction;
+
   @Column()
   transaction_amount: number;
 
@@ -19,6 +34,10 @@ class Payable {
 
   @Column()
   merchant_id: string;
+
+  @ManyToOne(() => Merchant)
+  @JoinColumn({ name: 'merchant_id' })
+  merchant: Merchant;
 
   @Column()
   merchant_name: string;
