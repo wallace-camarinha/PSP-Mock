@@ -76,6 +76,6 @@ export default class Payables1629485492622 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.dropTable('payables');
+    await queryRunner.dropTable('payables');
   }
 }

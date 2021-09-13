@@ -84,6 +84,6 @@ export default class Transactions1629325758101 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.dropTable('transactions');
+    await queryRunner.dropTable('transactions');
   }
 }
