@@ -16,11 +16,11 @@ export default class Payables1629485492622 implements MigrationInterface {
             type: 'int',
           },
           {
-            name: 'transaction_id',
+            name: 'order_id',
             type: 'uuid',
           },
           {
-            name: 'transaction_amount',
+            name: 'order_amount',
             type: 'int',
           },
           {
@@ -63,10 +63,10 @@ export default class Payables1629485492622 implements MigrationInterface {
             onUpdate: 'CASCADE',
           },
           {
-            name: 'FK_transaction',
-            referencedTableName: 'transactions',
+            name: 'FK_order',
+            referencedTableName: 'orders',
             referencedColumnNames: ['id'],
-            columnNames: ['transaction_id'],
+            columnNames: ['order_id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },

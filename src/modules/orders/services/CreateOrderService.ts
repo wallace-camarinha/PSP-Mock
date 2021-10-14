@@ -5,15 +5,15 @@ import ICustomersRepository from '@modules/customers/repositories/ICustomersRepo
 import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 import IPayablesRepository from '@modules/payables/repositories/IPayablesRepository';
 
-import ITransactionsRepository from '../repositories/ITransactionsRepository';
-import ITransaction from '../dtos/ITransaction';
-import ICreateTransaction from '../dtos/ICreateTransaction';
+import IOrdersRepository from '../repositories/IOrdersRepository';
+import IOrder from '../dtos/IOrder';
+import ICreateOrder from '../dtos/ICreateOrder';
 
 @injectable()
-class CreateTransactionService {
+class CreateOrderService {
   constructor(
-    @inject('TransactionsRepository')
-    private transactionsRepository: ITransactionsRepository,
+    @inject('OrdersRepository')
+    private ordersRepository: IOrdersRepository,
 
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -25,7 +25,7 @@ class CreateTransactionService {
     private payablesRepository: IPayablesRepository,
   ) {}
 
-  async execute(payload: ICreateTransaction): Promise<ITransaction> {
+  async execute(payload: ICreateOrder): Promise<IOrder> {
     let { customer } = payload;
 
     const customerExists = await this.customersRepository.findOne(
@@ -48,37 +48,35 @@ class CreateTransactionService {
 
     const merchantName = merchant.name;
 
-    const transactionPayload = {
+    const orderPayload = {
       ...payload,
       customer,
       merchant,
       merchant_name: merchantName,
     };
-    const transaction = await this.transactionsRepository.create(
-      transactionPayload,
-    );
+    const order = await this.ordersRepository.create(orderPayload);
 
-    this.payablesRepository.create(transaction);
+    this.payablesRepository.create(order);
 
-    const responseTransaction: ITransaction = {
-      id: transaction.id,
-      amount: transaction.amount,
-      description: transaction.description,
-      payment_method: transaction.payment_method,
-      status: transaction.status,
+    const responseOrder: IOrder = {
+      id: order.id,
+      amount: order.amount,
+      description: order.description,
+      payment_method: order.payment_method,
+      status: order.status,
       payment: {
-        card_number: transaction.card_number,
-        cardholder_name: transaction.cardholder_name,
-        exp_date: transaction.exp_date,
-        cvv: transaction.cvv,
+        card_number: order.card_number,
+        cardholder_name: order.cardholder_name,
+        exp_date: order.exp_date,
+        cvv: order.cvv,
       },
       customer: { ...customer },
       merchant: { ...merchant },
-      created_date: transaction.created_at,
+      created_date: order.created_at,
     };
 
-    return responseTransaction;
+    return responseOrder;
   }
 }
 
-export default CreateTransactionService;
+export default CreateOrderService;

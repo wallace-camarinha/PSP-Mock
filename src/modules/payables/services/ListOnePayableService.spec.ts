@@ -1,20 +1,20 @@
-import FakeTransactionsRepository from '@modules/transactions/repositories/fakes/FakeTransactionsRepository';
+import FakeOrdersRepository from '@modules/orders/repositories/fakes/FakeOrdersRepository';
 import FakePayablesRepository from '../repositories/fakes/FakePayablesRepository';
 import ListOnePayableService from './ListOnePayableService';
 
-let fakeTransactionsRepository: FakeTransactionsRepository;
+let fakeOrdersRepository: FakeOrdersRepository;
 let fakePayablesRepository: FakePayablesRepository;
 let listOnePayableService: ListOnePayableService;
 
 describe('ListOnePayable', () => {
   beforeEach(() => {
     fakePayablesRepository = new FakePayablesRepository();
-    fakeTransactionsRepository = new FakeTransactionsRepository();
+    fakeOrdersRepository = new FakeOrdersRepository();
     listOnePayableService = new ListOnePayableService(fakePayablesRepository);
   });
 
   it('Should be able to list one payable passing the "payable_id"', async () => {
-    const transaction = await fakeTransactionsRepository.create({
+    const order = await fakeOrdersRepository.create({
       merchant_id: '123',
       merchant_name: 'Test Store',
       customer_id: '321',
@@ -33,7 +33,7 @@ describe('ListOnePayable', () => {
         email: 'john.doe@example.com',
       },
     });
-    const payable = await fakePayablesRepository.create(transaction);
+    const payable = await fakePayablesRepository.create(order);
 
     const foundPayable = await listOnePayableService.execute(payable.id);
 

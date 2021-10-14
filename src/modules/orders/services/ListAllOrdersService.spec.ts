@@ -1,29 +1,27 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeMerchantsRepository from '@modules/merchants/repositories/fakes/FakeMerchantsRepository';
-import FakeTransactionsRepository from '../repositories/fakes/FakeTransactionsRepository';
-import ListAllTransactionsService from './ListAllTransactionsService';
+import FakeOrdersRepository from '../repositories/fakes/FakeOrdersRepository';
+import ListAllOrdersService from './ListAllOrdersService';
 
 let fakeMerchantsRepository: FakeMerchantsRepository;
-let fakeTransactionsRepository: FakeTransactionsRepository;
-let listAllTransactionsService: ListAllTransactionsService;
+let fakeOrdersRepository: FakeOrdersRepository;
+let listAllOrdersService: ListAllOrdersService;
 
-describe('ListAllTransactions', () => {
+describe('ListAllOrders', () => {
   beforeEach(() => {
-    fakeTransactionsRepository = new FakeTransactionsRepository();
+    fakeOrdersRepository = new FakeOrdersRepository();
     fakeMerchantsRepository = new FakeMerchantsRepository();
 
-    listAllTransactionsService = new ListAllTransactionsService(
-      fakeTransactionsRepository,
-    );
+    listAllOrdersService = new ListAllOrdersService(fakeOrdersRepository);
   });
 
-  it('Should be able to list all transactions from a Merchant', async () => {
+  it('Should be able to list all orders from a Merchant', async () => {
     const merchant = await fakeMerchantsRepository.create({
       name: 'Test Store',
       cnpj: '123',
     });
-    const transaction1 = await fakeTransactionsRepository.create({
+    const order1 = await fakeOrdersRepository.create({
       merchant_id: merchant.id,
       merchant_name: 'Test Store',
       customer_id: '',
@@ -43,7 +41,7 @@ describe('ListAllTransactions', () => {
       },
     });
 
-    const transaction2 = await fakeTransactionsRepository.create({
+    const order2 = await fakeOrdersRepository.create({
       merchant_id: merchant.id,
       merchant_name: 'Test Store',
       customer_id: '',
@@ -63,13 +61,13 @@ describe('ListAllTransactions', () => {
       },
     });
 
-    const transactions = await listAllTransactionsService.execute(merchant.id);
+    const orders = await listAllOrdersService.execute(merchant.id);
 
-    expect(transactions).toEqual([transaction1, transaction2]);
+    expect(orders).toEqual([order1, order2]);
   });
 
-  it('Should not be able to list all transactions with an invalid "merchant_id"', async () => {
-    await expect(listAllTransactionsService.execute('')).rejects.toBeInstanceOf(
+  it('Should not be able to list all orders with an invalid "merchant_id"', async () => {
+    await expect(listAllOrdersService.execute('')).rejects.toBeInstanceOf(
       AppError,
     );
   });

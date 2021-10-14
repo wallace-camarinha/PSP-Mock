@@ -1,9 +1,10 @@
-export default interface ITransaction {
-  id: string;
+export default interface ICreateOrder {
+  merchant_id: string;
+  merchant_name?: string;
+  customer_id?: string;
   amount: number;
   description: string;
   payment_method: string;
-  status: string;
   payment: {
     card_number: string;
     cardholder_name: string;
@@ -17,9 +18,4 @@ export default interface ITransaction {
     type?: string;
     document?: string;
   };
-  merchant: {
-    id: string;
-    name: string;
-  };
-  created_date: Date;
 }

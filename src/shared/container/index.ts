@@ -6,8 +6,8 @@ import CustomersRepository from '@modules/customers/infra/typeorm/repositories/C
 import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 import MerchantsRepository from '@modules/merchants/infra/typeorm/repositories/MerchantsRepository';
 
-import ITransactionsRepository from '@modules/transactions/repositories/ITransactionsRepository';
-import TransactionsRepository from '@modules/transactions/infra/typeorm/repositories/TransactionsRepository';
+import IOrdersRepository from '@modules/orders/repositories/IOrdersRepository';
+import OrdersRepository from '@modules/orders/infra/typeorm/repositories/OrdersRepository';
 
 import IPayablesRepository from '@modules/payables/repositories/IPayablesRepository';
 import PayablesRepository from '@modules/payables/infra/typeorm/repositories/PayablesRepository';
@@ -22,9 +22,9 @@ container.registerSingleton<IMerchantsRepository>(
   MerchantsRepository,
 );
 
-container.registerSingleton<ITransactionsRepository>(
-  'TransactionsRepository',
-  TransactionsRepository,
+container.registerSingleton<IOrdersRepository>(
+  'OrdersRepository',
+  OrdersRepository,
 );
 
 container.registerSingleton<IPayablesRepository>(

@@ -1,8 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import AppError from '@shared/errors/AppError';
-
-import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import Order from '@modules/orders/infra/typeorm/entities/Order';
 import Payable from '../infra/typeorm/entities/Payable';
 import IPayablesRepository from '../repositories/IPayablesRepository';
 
@@ -13,8 +11,8 @@ class CreatePayableService {
     private payablesRepository: IPayablesRepository,
   ) {}
 
-  async execute(transaction: Transaction): Promise<Payable> {
-    const payable = await this.payablesRepository.create(transaction);
+  async execute(order: Order): Promise<Payable> {
+    const payable = await this.payablesRepository.create(order);
 
     return payable;
   }

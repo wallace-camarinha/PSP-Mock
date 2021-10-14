@@ -3,39 +3,39 @@ import AppError from '@shared/errors/AppError';
 import FakeCustomersRepository from '@modules/customers/repositories/fakes/FakeCustomersRepository';
 import FakeMerchantsRepository from '@modules/merchants/repositories/fakes/FakeMerchantsRepository';
 import FakePayablesRepository from '@modules/payables/repositories/fakes/FakePayablesRepository';
-import FakeTransactionsRepository from '../repositories/fakes/FakeTransactionsRepository';
+import FakeOrdersRepository from '../repositories/fakes/FakeOrdersRepository';
 
-import CreateTransactionService from './CreateTransactionService';
+import CreateOrderService from './CreateOrderService';
 
 let fakeCustomersRepository: FakeCustomersRepository;
 let fakeMerchantsRepository: FakeMerchantsRepository;
 let fakePayablesRepository: FakePayablesRepository;
-let fakeTransactionsRepository: FakeTransactionsRepository;
+let fakeOrdersRepository: FakeOrdersRepository;
 
-let createTransaction: CreateTransactionService;
+let createOrder: CreateOrderService;
 
-describe('CreateTransaction', () => {
+describe('CreateOrder', () => {
   beforeEach(() => {
-    fakeTransactionsRepository = new FakeTransactionsRepository();
+    fakeOrdersRepository = new FakeOrdersRepository();
     fakeCustomersRepository = new FakeCustomersRepository();
     fakeMerchantsRepository = new FakeMerchantsRepository();
     fakePayablesRepository = new FakePayablesRepository();
 
-    createTransaction = new CreateTransactionService(
-      fakeTransactionsRepository,
+    createOrder = new CreateOrderService(
+      fakeOrdersRepository,
       fakeCustomersRepository,
       fakeMerchantsRepository,
       fakePayablesRepository,
     );
   });
 
-  it('Should be able to create a transaction', async () => {
+  it('Should be able to create a order', async () => {
     fakeMerchantsRepository.create({
       name: 'Test Store',
       cnpj: '123',
     });
 
-    const transaction = await createTransaction.execute({
+    const order = await createOrder.execute({
       merchant_id: '123',
       merchant_name: 'Test Store',
       customer_id: '',
@@ -55,12 +55,12 @@ describe('CreateTransaction', () => {
       },
     });
 
-    expect(transaction).toHaveProperty('id');
+    expect(order).toHaveProperty('id');
   });
 
-  it('Should not be able to create a transaction with an invalid "merchant_id"', async () => {
+  it('Should not be able to create a order with an invalid "merchant_id"', async () => {
     await expect(
-      createTransaction.execute({
+      createOrder.execute({
         merchant_id: '',
         merchant_name: 'Test Store',
         customer_id: '',

@@ -4,21 +4,21 @@ import calculatePaymentDate from '@modules/payables/utils/calculatePaylmentDate'
 import calculateFee from '@modules/payables/utils/calculateFee';
 
 import Payable from '@modules/payables/infra/typeorm/entities/Payable';
-import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import Order from '@modules/orders/infra/typeorm/entities/Order';
 import IPayablesRepository from '../IPayablesRepository';
 
 class FakePayablesRepository implements IPayablesRepository {
   private payables: Payable[] = [];
 
-  public async create(payload: Transaction): Promise<Payable> {
+  public async create(payload: Order): Promise<Payable> {
     const payable: Payable = new Payable();
     const paymentMethod = payload.payment_method;
 
     Object.assign(payable, {
       id: uuid(),
       amount: calculateFee(payload.amount, payload.payment_method),
-      transaction_id: payload.id,
-      transaction_amount: payload.amount,
+      order_id: payload.id,
+      order_amount: payload.amount,
       payment_method: payload.payment_method,
       merchant_id: payload.merchant_id,
       merchant_name: payload.merchant_name,

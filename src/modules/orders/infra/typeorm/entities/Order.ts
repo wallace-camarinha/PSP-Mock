@@ -10,8 +10,8 @@ import {
 import Merchant from '@modules/merchants/infra/typeorm/entities/Merchant';
 import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 
-@Entity('transactions')
-class Transaction {
+@Entity('orders')
+class Order {
   @PrimaryColumn()
   id: string;
 
@@ -60,4 +60,4 @@ class Transaction {
   created_at: Date;
 }
 
-export default Transaction;
+export default Order;

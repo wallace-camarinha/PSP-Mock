@@ -4,11 +4,11 @@ export default interface IPayablesDash {
   payables: {
     available: {
       amount: number;
-      transactions_count: number;
+      orders_count: number;
     };
     waiting_funds: {
       amount: number;
-      transactions_count: number;
+      orders_count: number;
     };
   };
 }

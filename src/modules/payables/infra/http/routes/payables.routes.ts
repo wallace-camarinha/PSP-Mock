@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import TransactionsController from '../controllers/PayablesController';
+import PayablesController from '../controllers/PayablesController';
 
 const payablesRouter = Router();
-const payablesController = new TransactionsController();
+const payablesController = new PayablesController();
 
 payablesRouter.get('/list', payablesController.listAll);
 payablesRouter.get('/dash', payablesController.payablesDash);

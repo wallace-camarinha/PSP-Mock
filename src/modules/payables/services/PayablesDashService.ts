@@ -37,11 +37,11 @@ class PayableDashService {
       payables: {
         available: {
           amount: amounts.paidAmount,
-          transactions_count: amounts.paidCount,
+          orders_count: amounts.paidCount,
         },
         waiting_funds: {
           amount: amounts.waitingAmount,
-          transactions_count: amounts.waitingCount,
+          orders_count: amounts.waitingCount,
         },
       },
     };

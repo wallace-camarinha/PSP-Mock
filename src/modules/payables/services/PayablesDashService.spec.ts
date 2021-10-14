@@ -1,11 +1,11 @@
 import AppError from '@shared/errors/AppError';
 
-import FakeTransactionsRepository from '@modules/transactions/repositories/fakes/FakeTransactionsRepository';
+import FakeOrdersRepository from '@modules/orders/repositories/fakes/FakeOrdersRepository';
 import FakeMerchantsRepository from '@modules/merchants/repositories/fakes/FakeMerchantsRepository';
 import FakePayablesRepository from '../repositories/fakes/FakePayablesRepository';
 import PayablesDashService from './PayablesDashService';
 
-let fakeTransactionsRepository: FakeTransactionsRepository;
+let fakeOrdersRepository: FakeOrdersRepository;
 let fakeMerchantsRepository: FakeMerchantsRepository;
 let fakePayablesRepository: FakePayablesRepository;
 let payablesDash: PayablesDashService;
@@ -14,7 +14,7 @@ describe('PayablesDashService', () => {
   beforeEach(() => {
     fakePayablesRepository = new FakePayablesRepository();
     fakeMerchantsRepository = new FakeMerchantsRepository();
-    fakeTransactionsRepository = new FakeTransactionsRepository();
+    fakeOrdersRepository = new FakeOrdersRepository();
 
     payablesDash = new PayablesDashService(
       fakePayablesRepository,
@@ -28,7 +28,7 @@ describe('PayablesDashService', () => {
       cnpj: '123',
     });
 
-    const transaction1 = await fakeTransactionsRepository.create({
+    const order1 = await fakeOrdersRepository.create({
       merchant_id: merchant.id,
       merchant_name: merchant.name,
       customer_id: '321',
@@ -47,7 +47,7 @@ describe('PayablesDashService', () => {
         email: 'john.doe@example.com',
       },
     });
-    const transaction2 = await fakeTransactionsRepository.create({
+    const order2 = await fakeOrdersRepository.create({
       merchant_id: merchant.id,
       merchant_name: merchant.name,
       customer_id: '321',
@@ -67,8 +67,8 @@ describe('PayablesDashService', () => {
       },
     });
 
-    const payable1 = await fakePayablesRepository.create(transaction1);
-    const payable2 = await fakePayablesRepository.create(transaction2);
+    const payable1 = await fakePayablesRepository.create(order1);
+    const payable2 = await fakePayablesRepository.create(order2);
 
     const sumOfAmounts = payable1.amount + payable2.amount;
 

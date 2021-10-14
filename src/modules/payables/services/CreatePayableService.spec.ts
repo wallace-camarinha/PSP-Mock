@@ -1,20 +1,20 @@
-import FakeTransactionsRepository from '@modules/transactions/repositories/fakes/FakeTransactionsRepository';
+import FakeOrdersRepository from '@modules/orders/repositories/fakes/FakeOrdersRepository';
 import FakePayablesRepository from '../repositories/fakes/FakePayablesRepository';
 import CreatePayableService from './CreatePayableService';
 
-let fakeTransactionsRepository: FakeTransactionsRepository;
+let fakeOrdersRepository: FakeOrdersRepository;
 let fakePayablesRepository: FakePayablesRepository;
 let createPayable: CreatePayableService;
 
 describe('CreatePayable', () => {
   beforeEach(() => {
     fakePayablesRepository = new FakePayablesRepository();
-    fakeTransactionsRepository = new FakeTransactionsRepository();
+    fakeOrdersRepository = new FakeOrdersRepository();
     createPayable = new CreatePayableService(fakePayablesRepository);
   });
 
   it('Should be able to create a payable', async () => {
-    const transaction = await fakeTransactionsRepository.create({
+    const order = await fakeOrdersRepository.create({
       merchant_id: '123',
       merchant_name: 'Test Store',
       customer_id: '321',
@@ -34,7 +34,7 @@ describe('CreatePayable', () => {
       },
     });
 
-    const payable = await createPayable.execute(transaction);
+    const payable = await createPayable.execute(order);
 
     expect(payable).toHaveProperty('id');
   });

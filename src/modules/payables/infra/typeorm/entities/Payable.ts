@@ -8,7 +8,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 
-import Transaction from '@modules/transactions/infra/typeorm/entities/Transaction';
+import Order from '@modules/orders/infra/typeorm/entities/Order';
 import Merchant from '@modules/merchants/infra/typeorm/entities/Merchant';
 
 @Entity('payables')
@@ -20,14 +20,14 @@ class Payable {
   amount: number;
 
   @Column()
-  transaction_id: string;
+  order_id: string;
 
-  @OneToOne(() => Transaction)
-  @JoinColumn({ name: 'transaction_id' })
-  transaction: Transaction;
+  @OneToOne(() => Order)
+  @JoinColumn({ name: 'order_id' })
+  order: Order;
 
   @Column()
-  transaction_amount: number;
+  order_amount: number;
 
   @Column()
   payment_method: string;

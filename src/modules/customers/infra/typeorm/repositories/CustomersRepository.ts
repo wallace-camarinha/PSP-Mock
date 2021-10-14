@@ -28,9 +28,9 @@ class CustomersRepository implements ICustomersRepository {
   }
 
   public async findAll(): Promise<Customer[] | undefined> {
-    const merchantTransactions = await this.ormRepository.find();
+    const merchantOrders = await this.ormRepository.find();
 
-    return merchantTransactions;
+    return merchantOrders;
   }
 
   public async findOne(arg: string): Promise<Customer | undefined> {
