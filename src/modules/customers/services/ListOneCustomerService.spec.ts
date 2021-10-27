@@ -1,4 +1,5 @@
-import AppError from '@shared/errors/AppError';
+import 'reflect-metadata';
+
 import FakeCustomersRepository from '../repositories/fakes/FakeCustomersRepository';
 import ListOneCustomerService from './ListOneCustomerService';
 
@@ -15,9 +16,11 @@ describe('ListOneCustomer', () => {
     const customer = await fakeCustomersRepository.create({
       name: 'Test Example',
       email: 'test@example.com',
+      type: null,
+      document: null,
     });
 
-    const findCustomer = await listOneCustomer.execute(customer.id, '');
+    const findCustomer = await listOneCustomer.execute(customer.id);
 
     expect(findCustomer).toEqual(customer);
   });
@@ -26,21 +29,12 @@ describe('ListOneCustomer', () => {
     const customer = await fakeCustomersRepository.create({
       name: 'Test Example',
       email: 'test@example.com',
+      type: null,
+      document: null,
     });
 
-    const findCustomer = await listOneCustomer.execute('', customer.email);
+    const findCustomer = await listOneCustomer.execute(customer.email);
 
     expect(findCustomer).toEqual(customer);
-  });
-
-  it('Should not be able to list one customer passing an invalid "customer_id"', async () => {
-    const customer = await fakeCustomersRepository.create({
-      name: 'Test Example',
-      email: 'test@example.com',
-    });
-
-    await expect(
-      listOneCustomer.execute('invalid_id', ''),
-    ).rejects.toBeInstanceOf(AppError);
   });
 });

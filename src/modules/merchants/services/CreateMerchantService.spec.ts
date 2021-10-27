@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import AppError from '@shared/errors/AppError';
 import FakeMerchantsRepository from '../repositories/fakes/FakeMerchantsRepository';
 import CreateMerchantService from './CreateMerchantService';

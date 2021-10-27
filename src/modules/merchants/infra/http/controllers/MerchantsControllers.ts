@@ -1,12 +1,10 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { validate } from 'uuid';
 
 import ICreateMerchant from '@modules/merchants/dtos/ICreateMerchant';
 import CreateMerchantService from '@modules/merchants/services/CreateMerchantService';
 import ListOneMerchantService from '@modules/merchants/services/ListOneMerchantService';
 import ListAllMerchantsService from '@modules/merchants/services/ListAllMerchantsService';
-import AppError from '@shared/errors/AppError';
 
 export default class MerchantsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -24,8 +22,7 @@ export default class MerchantsController {
     const { merchant_id: merchantId, cnpj: documentNumber } = req.body;
 
     const merchant = await listOneMerchantService.execute(
-      merchantId,
-      documentNumber,
+      merchantId || documentNumber,
     );
 
     return res.json(merchant);

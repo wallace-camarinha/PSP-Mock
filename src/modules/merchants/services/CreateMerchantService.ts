@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
+import { Merchant } from '@shared/infra/prisma/prismaClient';
 import ICreateMerchant from '../dtos/ICreateMerchant';
-import Merchant from '../infra/typeorm/entities/Merchant';
 import IMerchantsRepository from '../repositories/IMerchantsRepository';
 
 @injectable()

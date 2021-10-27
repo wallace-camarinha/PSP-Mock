@@ -5,8 +5,8 @@ import ICustomersRepository from '@modules/customers/repositories/ICustomersRepo
 import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 import IPayablesRepository from '@modules/payables/repositories/IPayablesRepository';
 
+import { Order } from '@shared/infra/prisma/prismaClient';
 import IOrdersRepository from '../repositories/IOrdersRepository';
-import IOrder from '../dtos/IOrder';
 import ICreateOrder from '../dtos/ICreateOrder';
 
 @injectable()
@@ -25,7 +25,7 @@ class CreateOrderService {
     private payablesRepository: IPayablesRepository,
   ) {}
 
-  async execute(payload: ICreateOrder): Promise<IOrder> {
+  async execute(payload: ICreateOrder): Promise<Order> {
     let { customer } = payload;
 
     const customerExists = await this.customersRepository.findOne(
@@ -46,36 +46,16 @@ class CreateOrderService {
       throw new AppError('Invalid Merchant', 400);
     }
 
-    const merchantName = merchant.name;
-
     const orderPayload = {
       ...payload,
       customer,
       merchant,
-      merchant_name: merchantName,
     };
     const order = await this.ordersRepository.create(orderPayload);
 
     this.payablesRepository.create(order);
 
-    const responseOrder: IOrder = {
-      id: order.id,
-      amount: order.amount,
-      description: order.description,
-      payment_method: order.payment_method,
-      status: order.status,
-      payment: {
-        card_number: order.card_number,
-        cardholder_name: order.cardholder_name,
-        exp_date: order.exp_date,
-        cvv: order.cvv,
-      },
-      customer: { ...customer },
-      merchant: { ...merchant },
-      created_date: order.created_at,
-    };
-
-    return responseOrder;
+    return order;
   }
 }
 
