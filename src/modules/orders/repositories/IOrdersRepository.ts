@@ -1,5 +1,5 @@
+import { Order } from '@shared/infra/prisma/prismaClient';
 import ICreateOrder from '../dtos/ICreateOrder';
-import Order from '../infra/typeorm/entities/Order';
 
 export default interface IOrdersRepository {
   create(payload: ICreateOrder): Promise<Order>;

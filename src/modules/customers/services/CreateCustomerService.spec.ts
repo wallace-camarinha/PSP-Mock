@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import AppError from '@shared/errors/AppError';
 
 import FakeCustomersRepository from '../repositories/fakes/FakeCustomersRepository';
@@ -16,21 +18,27 @@ describe('CreateCustomer', () => {
     const customer = await createCustomer.execute({
       name: 'Test Example',
       email: 'test@example.com',
+      type: null,
+      document: null,
     });
 
     expect(customer).toHaveProperty('id');
   });
 
-  it('Should not be able to create a customer with an existing e-mail', async () => {
+  it('Should not be able to create a customer with an existing ei-mal', async () => {
     const customer = await createCustomer.execute({
       name: 'Test Example',
       email: 'test@example.com',
+      type: null,
+      document: null,
     });
 
     await expect(
       createCustomer.execute({
         name: 'Test Example',
         email: 'test@example.com',
+        type: null,
+        document: null,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -40,6 +48,8 @@ describe('CreateCustomer', () => {
       createCustomer.execute({
         name: '',
         email: '',
+        type: null,
+        document: null,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

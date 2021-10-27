@@ -1,7 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import Order from '@modules/orders/infra/typeorm/entities/Order';
-import Payable from '../infra/typeorm/entities/Payable';
+import { Payable, Order } from '@shared/infra/prisma/prismaClient';
 import IPayablesRepository from '../repositories/IPayablesRepository';
 
 @injectable()

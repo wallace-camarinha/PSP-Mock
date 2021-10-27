@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-import Order from '@modules/orders/infra/typeorm/entities/Order';
+import { Order } from '@shared/infra/prisma/prismaClient';
 import ICreateOrder from '@modules/orders/dtos/ICreateOrder';
 import IOrdersRepository from '../IOrdersRepository';
 
@@ -8,19 +8,16 @@ class FakeOrdersRepository implements IOrdersRepository {
   private orders: Order[] = [];
 
   public async create(payload: ICreateOrder): Promise<Order> {
-    const order: Order = new Order();
-
     const cardNumber = payload.payment.card_number;
     const maskedCardNumber = `${cardNumber.slice(
       0,
       6,
     )}********${cardNumber.slice(-4)}`;
 
-    Object.assign(order, {
+    const order: Order = {
       id: uuid(),
-      customer_id: payload.customer.id,
+      customer_id: payload.customer.id!,
       merchant_id: payload.merchant_id,
-      merchant_name: payload.merchant_name,
       amount: payload.amount,
       description: payload.description,
       payment_method: payload.payment_method,
@@ -30,7 +27,7 @@ class FakeOrdersRepository implements IOrdersRepository {
       cvv: payload.payment.cvv,
       status: 'approved',
       created_at: new Date(),
-    });
+    };
 
     this.orders.push(order);
 
