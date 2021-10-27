@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import AppError from '@shared/errors/AppError';
 
 import FakeCustomersRepository from '@modules/customers/repositories/fakes/FakeCustomersRepository';
@@ -37,7 +39,6 @@ describe('CreateOrder', () => {
 
     const order = await createOrder.execute({
       merchant_id: '123',
-      merchant_name: 'Test Store',
       customer_id: '',
       amount: 100000,
       description: 'Test',
@@ -52,6 +53,8 @@ describe('CreateOrder', () => {
         id: '123',
         name: 'John Doe',
         email: 'john.doe@example.com',
+        type: null,
+        document: null,
       },
     });
 
@@ -62,7 +65,6 @@ describe('CreateOrder', () => {
     await expect(
       createOrder.execute({
         merchant_id: '',
-        merchant_name: 'Test Store',
         customer_id: '',
         amount: 100000,
         description: 'Test',
@@ -77,6 +79,8 @@ describe('CreateOrder', () => {
           id: '123',
           name: 'John Doe',
           email: 'john.doe@example.com',
+          type: null,
+          document: null,
         },
       }),
     ).rejects.toBeInstanceOf(AppError);

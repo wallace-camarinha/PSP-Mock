@@ -1,4 +1,4 @@
-import AppError from '@shared/errors/AppError';
+import 'reflect-metadata';
 
 import FakeOrdersRepository from '../repositories/fakes/FakeOrdersRepository';
 import ListOneOrderService from './ListOneOrderService';
@@ -16,7 +16,6 @@ describe('ListOneOrders', () => {
   it('Should be able to list one orders passing the "id"', async () => {
     const order = await fakeOrdersRepository.create({
       merchant_id: '123',
-      merchant_name: 'Test Store',
       customer_id: '',
       amount: 100000,
       description: 'Test',
@@ -31,6 +30,8 @@ describe('ListOneOrders', () => {
         id: '123',
         name: 'John Doe',
         email: 'john.doe@example.com',
+        type: null,
+        document: null,
       },
     });
 

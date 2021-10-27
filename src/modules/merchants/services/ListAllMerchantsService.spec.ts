@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import FakeMerchantsRepository from '../repositories/fakes/FakeMerchantsRepository';
 import ListAllMerchantsService from './ListAllMerchantsService';
 

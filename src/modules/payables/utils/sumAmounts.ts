@@ -1,4 +1,4 @@
-import Payable from '../infra/typeorm/entities/Payable';
+import { Payable } from '@shared/infra/prisma/prismaClient';
 
 interface Amounts {
   paidAmount: number;

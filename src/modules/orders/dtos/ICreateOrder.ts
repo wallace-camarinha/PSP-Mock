@@ -1,6 +1,5 @@
 export default interface ICreateOrder {
   merchant_id: string;
-  merchant_name?: string;
   customer_id?: string;
   amount: number;
   description: string;
@@ -15,7 +14,7 @@ export default interface ICreateOrder {
     id?: string;
     name: string;
     email: string;
-    type?: string;
-    document?: string;
+    type: string | null;
+    document: string | null;
   };
 }

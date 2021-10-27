@@ -1,4 +1,4 @@
-import Order from '@modules/orders/infra/typeorm/entities/Order';
+import { Order } from '@shared/infra/prisma/prismaClient';
 import { inject, injectable } from 'tsyringe';
 import IOrdersRepository from '../repositories/IOrdersRepository';
 

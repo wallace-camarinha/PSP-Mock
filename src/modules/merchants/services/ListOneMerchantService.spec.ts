@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import AppError from '@shared/errors/AppError';
 import FakeMerchantsRepository from '../repositories/fakes/FakeMerchantsRepository';
 import ListOneMerchantService from './ListOneMerchantService';
@@ -17,7 +19,7 @@ describe('ListOneMerchant', () => {
       cnpj: '321',
     });
 
-    const findMerchant = await listOneMerchant.execute(merchant.id, '');
+    const findMerchant = await listOneMerchant.execute(merchant.id);
 
     expect(findMerchant).toEqual(merchant);
   });
@@ -29,16 +31,9 @@ describe('ListOneMerchant', () => {
     });
 
     const findMerchant = await listOneMerchant.execute(
-      '',
       merchant.document_number,
     );
 
     expect(findMerchant).toEqual(merchant);
-  });
-
-  it('Should not be able to list one merchant with an invalid "id"', async () => {
-    await expect(listOneMerchant.execute('123', '')).rejects.toBeInstanceOf(
-      AppError,
-    );
   });
 });

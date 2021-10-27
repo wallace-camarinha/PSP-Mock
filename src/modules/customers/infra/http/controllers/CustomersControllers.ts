@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { validate } from 'uuid';
 
 import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
 import ListAllCustomersService from '@modules/customers/services/ListAllCustomersService';
 import ListOneCustomerService from '@modules/customers/services/ListOneCustomerService';
 
 import ICreateCustomer from '@modules/customers/dtos/ICreateCustomer';
-import AppError from '@shared/errors/AppError';
 
 export default class CustomersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -24,7 +22,7 @@ export default class CustomersController {
 
     const { customer_id: id, email } = req.body;
 
-    const customer = await listOneCustomer.execute(id, email);
+    const customer = await listOneCustomer.execute(id || email);
     return res.json(customer);
   }
 

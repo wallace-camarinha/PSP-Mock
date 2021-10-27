@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-import Merchant from '@modules/merchants/infra/typeorm/entities/Merchant';
+import { Merchant } from '@shared/infra/prisma/prismaClient';
 import ICreateMerchant from '@modules/merchants/dtos/ICreateMerchant';
 import IMerchantsRepository from '../IMerchantsRepository';
 
@@ -8,12 +8,12 @@ class FakeMerchantsRepository implements IMerchantsRepository {
   private merchants: Merchant[] = [];
 
   public async create(payload: ICreateMerchant): Promise<Merchant> {
-    const merchant = new Merchant();
-    Object.assign(merchant, {
+    const merchant: Merchant = {
       id: uuid(),
       name: payload.name,
       document_number: payload.cnpj,
-    });
+      created_at: new Date(),
+    };
 
     this.merchants.push(merchant);
 

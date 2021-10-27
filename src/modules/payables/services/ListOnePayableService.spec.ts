@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import FakeOrdersRepository from '@modules/orders/repositories/fakes/FakeOrdersRepository';
 import FakePayablesRepository from '../repositories/fakes/FakePayablesRepository';
 import ListOnePayableService from './ListOnePayableService';
@@ -16,7 +18,6 @@ describe('ListOnePayable', () => {
   it('Should be able to list one payable passing the "payable_id"', async () => {
     const order = await fakeOrdersRepository.create({
       merchant_id: '123',
-      merchant_name: 'Test Store',
       customer_id: '321',
       amount: 100000,
       description: 'Test',
@@ -31,6 +32,8 @@ describe('ListOnePayable', () => {
         id: '123',
         name: 'John Doe',
         email: 'john.doe@example.com',
+        document: null,
+        type: null,
       },
     });
     const payable = await fakePayablesRepository.create(order);

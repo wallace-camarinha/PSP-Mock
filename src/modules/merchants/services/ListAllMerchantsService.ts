@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import Merchant from '../infra/typeorm/entities/Merchant';
+import { Merchant } from '@shared/infra/prisma/prismaClient';
 import IMerchantsRepository from '../repositories/IMerchantsRepository';
 
 @injectable()

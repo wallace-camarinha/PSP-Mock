@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
-import Payable from '../infra/typeorm/entities/Payable';
+import { Payable } from '@shared/infra/prisma/prismaClient';
 import IPayablesRepository from '../repositories/IPayablesRepository';
 
 @injectable()

@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import AppError from '@shared/errors/AppError';
 
 import FakeOrdersRepository from '@modules/orders/repositories/fakes/FakeOrdersRepository';
@@ -30,7 +32,6 @@ describe('PayablesDashService', () => {
 
     const order1 = await fakeOrdersRepository.create({
       merchant_id: merchant.id,
-      merchant_name: merchant.name,
       customer_id: '321',
       amount: 100000,
       description: 'Test',
@@ -45,11 +46,12 @@ describe('PayablesDashService', () => {
         id: '123',
         name: 'John Doe',
         email: 'john.doe@example.com',
+        document: null,
+        type: null,
       },
     });
     const order2 = await fakeOrdersRepository.create({
       merchant_id: merchant.id,
-      merchant_name: merchant.name,
       customer_id: '321',
       amount: 100000,
       description: 'Test',
@@ -64,6 +66,8 @@ describe('PayablesDashService', () => {
         id: '123',
         name: 'John Doe',
         email: 'john.doe@example.com',
+        document: null,
+        type: null,
       },
     });
 

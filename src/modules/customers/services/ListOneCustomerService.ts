@@ -1,8 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { validate } from 'uuid';
 
-import AppError from '@shared/errors/AppError';
-import Customer from '../infra/typeorm/entities/Customer';
+import { Customer } from '@shared/infra/prisma/prismaClient';
 import ICustomersRepository from '../repositories/ICustomersRepository';
 
 @injectable()
@@ -12,22 +10,7 @@ class ListOneCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  async execute(
-    customerId?: string,
-    email?: string,
-  ): Promise<Customer | undefined> {
-    let arg = customerId;
-    if (!arg) {
-      arg = email;
-    }
-
-    if (customerId) {
-      const isUuid = validate(customerId);
-      if (!isUuid) {
-        throw new AppError('Invalid merchant_id!', 400);
-      }
-    }
-
+  async execute(arg: string): Promise<Customer | undefined> {
     const customer = await this.customersRepository.findOne(arg);
 
     return customer;
