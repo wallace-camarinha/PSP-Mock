@@ -23,9 +23,7 @@ Sumary
       * [Requirements](#requirements)
       * [Running the API](#running-the-api)
       * [Introduction](#introduction)
-      * [Merchant](#merchant)
-   * [Technology Stack](#technology-stack)
-   * [Tests](#tests)
+   * [Technology Stack](#technologies)
 <!--te-->
 <br>
 <br>
