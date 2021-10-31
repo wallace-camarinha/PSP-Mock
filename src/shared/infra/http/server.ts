@@ -5,13 +5,17 @@ import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 
 import AppError from '@shared/errors/AppError';
-import routes from './routes';
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerFile from '../../../swagger.json';
 
 import '@shared/container';
+import { routes } from './routes';
 
 const app = express();
 
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(routes);
 
 // Error handler

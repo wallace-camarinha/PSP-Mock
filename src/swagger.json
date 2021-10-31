@@ -1,0 +1,633 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PSP Mock",
+    "description": "This is a PSP Mock application",
+    "version": "1.0.0",
+    "contact": {
+      "email": "wall@example.com",
+      "name": "Wallace"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5599"
+    }
+  ],
+  "paths": {
+    "/merchants": {
+      "post": {
+        "tags": ["Merchant"],
+        "summary": "Creates a new merchant",
+        "description": "This route creates a new Merchant in the database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "cnpj"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Neo's shop",
+                  "cnpj": "12345678000199"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Merchant"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please enter a valid document number and a name!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Merchant already exists with this document number!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Merchant"],
+        "summary": "Gets one merchant",
+        "description": "This route returns one merchant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "merchant_id": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "merchant_id": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Merchant"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/merchants/list": {
+      "get": {
+        "tags": ["Merchant"],
+        "summary": "List all merchants",
+        "description": "This route lists all merchants in the database",
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/ArrayOfMerchants"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers": {
+      "post": {
+        "tags": ["Customer"],
+        "summary": "Creates a new customer",
+        "description": "This route creates a new Customer in the database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "document": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Thomas Anderson",
+                  "cnpj": "thomas.anderson@matrix.com",
+                  "type": "individual",
+                  "document": "12345678901"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please enter a valid customer name and e-mail!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "This e-mail is already in use!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Customer"],
+        "summary": "Gets one customer",
+        "description": "This route returns one customer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customer_id": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "thomas.anderson@matrix.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/list": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "List all customer",
+        "description": "This route lists all customers in the database",
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/ArrayOfCustomers"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": ["Order"],
+        "summary": "Creates a new order",
+        "description": "This route creates a new Order in the database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "merchant_id",
+                  "amount",
+                  "description",
+                  "payment_method",
+                  "payment",
+                  "customer"
+                ],
+                "properties": {
+                  "merchant_id": {
+                    "type": "string"
+                  },
+                  "customer_id": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "payment_method": {
+                    "type": "string"
+                  },
+                  "payment": {
+                    "type": "object",
+                    "required": [
+                      "card_number",
+                      "cardholder_name",
+                      "exp_date",
+                      "cvv"
+                    ],
+                    "properties": {
+                      "card_number": {
+                        "type": "string"
+                      },
+                      "cardholder_name": {
+                        "type": "string"
+                      },
+                      "exp_date": {
+                        "type": "string"
+                      },
+                      "cvv": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "customer": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                },
+                "example": {
+                  "merchant_id": "37b1d046-c0d5-44ef-9326-f8f62b922ddd",
+                  "amount": 20000,
+                  "description": "Is it even air you're breathing right now",
+                  "payment_method": "credit_card",
+                  "payment": {
+                    "card_number": "4000000000000010",
+                    "cardholder_name": "Neo The Chosen",
+                    "exp_date": "10-2025",
+                    "cvv": 123
+                  },
+                  "customer": {
+                    "id": "02366951-e631-4299-93fd-35629a1056e6",
+                    "name": "Thomas Anderson",
+                    "email": "thomas.anderson@matrix.com",
+                    "type": "individual",
+                    "document": "12345678901",
+                    "created_at": "2021-10-31"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Merchant!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{order_id}": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "Gets one order",
+        "description": "This route returns one order",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "order_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Unique identifier of the order to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/list": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "List all orders of a merchant",
+        "description": "This route returns every order of a merchant",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["merchant_id"],
+                "properties": {
+                  "merchant_id": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "merchant_id": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfOrders"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Merchant": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+          },
+          "name": {
+            "type": "string",
+            "example": "Neo's shop"
+          },
+          "document_number": {
+            "type": "string",
+            "example": "12345678000199"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ArrayOfMerchants": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "$ref":"#/components/schemas/Merchant"
+        }
+      },
+      "Customer": {
+        "type": "object",
+        "required": ["name", "email"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "02366951-e631-4299-93fd-35629a1056e6"
+          },
+          "name": {
+            "type": "string",
+            "example": "Thomas Anderson"
+          },
+          "email": {
+            "type": "string",
+            "example": "thomas.anderson@matrix.com"
+          },
+          "type": {
+            "type": "string",
+            "example": "individual"
+          },
+          "document": {
+            "type": "string",
+            "example": "12345678901"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ArrayOfCustomers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "$ref":"#/components/schemas/Customer"
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "2511b59a-5f27-4323-9198-853abef743db"
+          },
+          "merchant_id": {
+            "type": "string",
+            "example": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+          },
+          "customer_id": {
+            "type": "string",
+            "example": "02366951-e631-4299-93fd-35629a1056e6"
+          },
+          "amount": {
+            "type": "integer",
+            "example": 20000
+          },
+          "description": {
+            "type": "string",
+            "example": "Is it even air you're breathing right now"
+          },
+          "payment_method": {
+            "type": "string",
+            "example": "credit_card"
+          },
+          "card_number": {
+            "type": "string",
+            "example": "400000******0010"
+          },
+          "cardholder_name": {
+            "type": "string",
+            "example": "Neo The Chosen"
+          },
+          "exp_date": {
+            "type": "string",
+            "example": "10-2025"
+          },
+          "cvv": {
+            "type": "integer",
+            "example": 123
+          },
+          "status": {
+            "type": "string",
+            "example": "approved"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date"
+          },
+          "merchant": {
+            "type": "object",
+            "$ref": "#/components/schemas/Merchant"
+          },
+          "customer": {
+            "type": "object",
+            "$ref": "#/components/schemas/Customer"
+          }
+        }
+      },
+      "ArrayOfOrders": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "$ref":"#/components/schemas/Order"
+        }
+      }
+    }
+  }
+}

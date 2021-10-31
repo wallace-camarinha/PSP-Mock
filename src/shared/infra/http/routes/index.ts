@@ -12,4 +12,4 @@ routes.use('/customers', customersRouter);
 routes.use('/merchants', merchantsRouter);
 routes.use('/payables', payablesRouter);
 
-export default routes;
+export { routes };

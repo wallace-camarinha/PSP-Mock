@@ -43,7 +43,6 @@ Before you begin, you're gonna need the following tools installed on your machin
 It's also good to have an editor to work with the code, but it's not mandatory. A good example is: [VSCode](https://code.visualstudio.com/).
 
 
-<!-- Você pode utilizar este arquivo do Insomnia com as requisições utilizadas em desenvolvimento: download -->
 
 <br>
 <br>
@@ -60,16 +59,20 @@ $ cd psp-mock
 # Install the dependencies
 $ npm install
 
+# Creates a new docker container to run the database
+$ docker run --name postgres-pg -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
 # Execute the application locally
 $ npm run dev:server
 
-# The server will stat on port:5555 - access: http://localhost:5555
+# The server will stat on port:5599 - access: http://localhost:5599
 ```
 
 <br>
 <br>
 
-## Introduction
+
+<h1 align="center">Introduction</h1>
 
 This application was built following REST patterns.
 <br>
@@ -77,157 +80,21 @@ Every request must be made to the <strong>endpoints</strong>, using HTTP verbs w
 
 <br>
 
-Base URL: http://localhost:5555
+Base URL: http://localhost:5599
 <br>
 💡<small> Currently the application only runs locally</small>
 
 <br>
 
-## Merchant
-The object ```merchant``` allow the creation of a store. A ```merchant``` has the following attributes:
-
-
-|    Attributes   |      Type     |         Description         |
-|:---------------:|:-------------:|:---------------------------:|
-|         id      |     string    |    Merchant's identifier    |
-|        name     |     string    |       Merchant's name       |
-| document_number |     string    |        Document (CNPJ)      |
-|    created_at   |      date     |   Merchant's creation date  |
-<br>
----
+### See the API's documentation here http://localhost:5599/api-docs
 
 <br>
 
-<h3>Create a Merchant - Method: <q style="color:DodgerBlue">POST</q></h3>
-Creates a Merchant in the application.
-<br>
-<small>Items with <a style="color:red">*</a> are mandatory.</small>
-<br>
-<br>
+<h1 align="center">Tecnologias</h1>
 
-ENDPOINT:
+## This project was built with the following technologies
 
->`http://localhost:5555/merchants`
-
-<br>
-
-BODY PARAMS:
-<br>
-
-* name <a style="color:red">*</a> -- `string`
-* document <a style="color:red">*</a> -- `string`
-
-EXAMPLE:
-
-    {
-      "name": "No Man's Store"
-      "cnpj": "12345678901234"
-    }
-<br>
-
----
-<br>
-
-<h3>List a Merchant - Method: <q style="color:LightGreen">GET</q></h3>
-
-List a Merchant based on it's identifier `merchant_id` or `cnpj`, informed in the request's body.
-<br>
-<small>Items with <a style="color:red">*</a> are mandatory.</small>
-<br>
-<br>
-
-ENDPOINT:
-
->`http://localhost:5555/merchants`
-<br>
-
-<br>
-
-BODY:
-<br>
-
-* merchant_id <a style="color:red">*</a> -- `string`
-</br>
-<small>Obrigatório quando não é enviado um `cnpj`</small>
-
-* cnpj <a style="color:red">*</a> -- `string`
-</br>
-<small>Obrigatório quando não é enviado um `merchant_id`</small>
-
-
-EXAMPLE:
-
-    {
-      "merchant_id": "a31b8a1d-f28b-4ba3-a27e-d85301aa8a9d"
-      "cnpj": "12345678901234"
-    }
-
-<br>
-
----
-<br>
-
-<h3>List All Merchants - Method: <q style="color:LightGreen">GET</q></h3>
-
-Lists a collection of all Merchants ever created in the application.
-<br>
-<br>
-
-ENDPOINT:
-
->`http://localhost:5555/merchants/list`
-<br>
-
-That simple!
-
----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<h3 align="center">Tecnologias</h3>
-
-As seguintes ferramentas foram usadas na construção do projeto:
-
-### Core
+### Core Dependencies
 
 - [Node.js](https://nodejs.org/en/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -237,4 +104,8 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 - [PostgresSQL](https://www.postgresql.org/)
 - [Docker](https://www.docker.com/)
-- [Typeorm](https://typeorm.io/)
+- [Prisma](https://www.prisma.io/)
+
+### Documentation
+
+- [Swagger](https://swagger.io)

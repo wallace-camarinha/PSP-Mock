@@ -24,7 +24,7 @@ class CreateMerchantService {
     if (merchantExists) {
       throw new AppError(
         'Merchant already exists with this document number!',
-        401,
+        409,
       );
     }
 
