@@ -13,7 +13,7 @@ class ListAllPayablesService {
 
   async execute(merchantId: string): Promise<Payable[]> {
     if (!merchantId) {
-      throw new AppError('Invalid merchant id', 402);
+      throw new AppError('Invalid merchant id', 400);
     }
     const payables = await this.payablesRepository.findAll(merchantId);
     return payables;

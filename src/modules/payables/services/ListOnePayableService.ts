@@ -10,8 +10,8 @@ class ListOnePayablesService {
     private payablesRepository: IPayablesRepository,
   ) {}
 
-  async execute(payableId: string): Promise<Payable | undefined> {
-    const payable = await this.payablesRepository.findByOrderId(payableId);
+  async execute(orderId: string): Promise<Payable | undefined> {
+    const payable = await this.payablesRepository.findByOrderId(orderId);
     return payable;
   }
 }

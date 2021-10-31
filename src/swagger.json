@@ -491,6 +491,193 @@
           }
         }
       }
+    },
+    "/payables/{id}": {
+      "get": {
+        "tags": ["Payable"],
+        "summary": "Gets one payable",
+        "description": "A payable is created whenever an order is created, it defines the amount a merchant is getting paid for that sale, and when it's being paid",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "order_id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Unique identifier of the order assigned to the payable"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payable"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payables/list": {
+      "get": {
+        "tags": ["Payable"],
+        "summary": "Gets all payables of a merchant",
+        "description": "Lists all payables from a merchant",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["merchant_id"],
+                "properties": {
+                  "merchant_id": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "merchant_id": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArrayOfPayables"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid merchant id"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payables/dash": {
+      "get": {
+        "tags": ["Payable"],
+        "summary": "Gets the sum of all available and waiting_funds amount of a merchant",
+        "description": "Returns a sum of all available and waiting_funds amount of the merchant",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["merchant_id"],
+                "properties": {
+                  "merchant_id": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "merchant_id": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "merchant_id": {
+                      "type": "string",
+                      "example": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+                    },
+                    "merchant_name": {
+                      "type": "string",
+                      "example": "Neo's shop"
+                    },
+                    "payables": {
+                      "type": "object",
+                      "properties": {
+                        "available": {
+                          "type": "object",
+                          "properties": {
+                            "amount": {
+                              "type": "integer",
+                              "example": 0
+                            },
+                            "orders_count": {
+                              "type": "integer",
+                              "example": 0
+                            }
+                          }
+                        },
+                        "waiting_funds": {
+                          "type": "object",
+                          "properties": {
+                            "amount": {
+                              "type": "integer",
+                              "example": 19000
+                            },
+                            "orders_count": {
+                              "type": "integer",
+                              "example": 0
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Merchant not found!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -512,7 +699,8 @@
           },
           "created_at": {
             "type": "string",
-            "format": "date"
+            "example": "2021-10-31T12:24:35.363Z",
+            "format": "date-time"
           }
         }
       },
@@ -549,7 +737,8 @@
           },
           "created_at": {
             "type": "string",
-            "format": "date"
+            "example": "2021-10-31T12:24:35.363Z",
+            "format": "date-time"
           }
         }
       },
@@ -609,7 +798,8 @@
           },
           "created_at": {
             "type": "string",
-            "format": "date"
+            "example": "2021-10-31T12:24:35.363Z",
+            "format": "date-time"
           },
           "merchant": {
             "type": "object",
@@ -626,6 +816,60 @@
         "items": {
           "type": "object",
           "$ref":"#/components/schemas/Order"
+        }
+      },
+      "Payable": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "66921ca3-d498-4a48-b133-4d000bfa1301"
+          },
+          "amount": {
+            "type": "integer",
+            "example": 19000
+          },
+          "merchant_id": {
+            "type": "string",
+            "example": "37b1d046-c0d5-44ef-9326-f8f62b922ddd"
+          },
+          "status": {
+            "type": "string",
+            "example": "waiting_funds"
+          },
+          "fee": {
+            "type": "integer",
+            "example": 0.05
+          },
+          "payment_date": {
+            "type": "string",
+            "example": "2021-11-31T12:24:35.363Z",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "example": "2021-10-31T12:24:35.363Z",
+            "format": "date-time"
+          },
+          "order_id": {
+            "type": "string",
+            "example": "2511b59a-5f27-4323-9198-853abef743db"
+          },
+          "order_amount": {
+            "type": "integer",
+            "example": 20000
+          },
+          "merchant": {
+            "type": "object",
+            "$ref": "#/components/schemas/Merchant"
+          }
+        }
+      },
+      "ArrayOfPayables": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "$ref":"#/components/schemas/Payable"
         }
       }
     }

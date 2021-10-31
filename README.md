@@ -89,8 +89,9 @@ Base URL: http://localhost:5599
 ### See the API's documentation here http://localhost:5599/api-docs
 
 <br>
+<br>
 
-<h1 align="center">Tecnologias</h1>
+<h1 align="center">Technologies</h1>
 
 ## This project was built with the following technologies
 
