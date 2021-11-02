@@ -84,7 +84,7 @@ Base URL: http://localhost:5599
 
 <br>
 
-### See the API's documentation here http://localhost:5599/api-docs
+### Once the server is online, see the API's documentation here http://localhost:5599/api-docs
 
 <br>
 <br>

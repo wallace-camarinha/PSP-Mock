@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
 
 import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
-import { CustomersRepository } from '@modules/customers/infra/prisma/CustomersRepository';
+import { CustomersRepository } from '@modules/customers/repositories/prisma/CustomersRepository';
 
 import IMerchantsRepository from '@modules/merchants/repositories/IMerchantsRepository';
 import { MerchantsRepository } from '@modules/merchants/infra/prisma/MerchantsRepository';

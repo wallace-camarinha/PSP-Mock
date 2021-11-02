@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { prismaClient, Customer } from '@shared/infra/prisma/prismaClient';
+import { Customer } from '@shared/infra/prisma/prismaClient';
 
 import AppError from '@shared/errors/AppError';
 import ICreateCustomer from '../dtos/ICreateCustomer';
