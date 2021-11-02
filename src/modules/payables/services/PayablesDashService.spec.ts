@@ -47,6 +47,7 @@ describe('PayablesDashService', () => {
         name: 'John Doe',
         email: 'john.doe@example.com',
         document: null,
+
         type: null,
       },
     });
@@ -79,17 +80,6 @@ describe('PayablesDashService', () => {
     const payableDash = await payablesDash.execute(merchant.id);
 
     expect(payableDash.payables.waiting_funds.amount).toBe(sumOfAmounts);
-  });
-
-  it('Should not be able to show the Payable dash if there are no Payables', async () => {
-    const merchant = await fakeMerchantsRepository.create({
-      name: 'Test Store',
-      cnpj: '123',
-    });
-
-    await expect(payablesDash.execute(merchant.id)).rejects.toBeInstanceOf(
-      AppError,
-    );
   });
 
   it('Should not be able to show the Payable dash passing an invalid "merchant_id"', async () => {

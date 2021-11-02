@@ -4,7 +4,7 @@ import { Payable } from '@shared/infra/prisma/prismaClient';
 import IPayablesRepository from '../repositories/IPayablesRepository';
 
 @injectable()
-class ListOnePayablesService {
+class ListOnePayableService {
   constructor(
     @inject('PayablesRepository')
     private payablesRepository: IPayablesRepository,
@@ -16,4 +16,4 @@ class ListOnePayablesService {
   }
 }
 
-export default ListOnePayablesService;
+export default ListOnePayableService;
