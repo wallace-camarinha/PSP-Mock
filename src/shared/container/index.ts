@@ -10,7 +10,7 @@ import IOrdersRepository from '@modules/orders/repositories/IOrdersRepository';
 import { OrdersRepository } from '@modules/orders/repositories/prisma/OrdersRepository';
 
 import IPayablesRepository from '@modules/payables/repositories/IPayablesRepository';
-import { PayablesRepository } from '@modules/payables/infra/prisma/PayablesRepository';
+import { PayablesRepository } from '@modules/payables/repositories/prisma/PayablesRepository';
 
 container.registerSingleton<ICustomersRepository>(
   'CustomersRepository',
